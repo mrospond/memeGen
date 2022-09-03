@@ -19,6 +19,8 @@ sudo apt install -y python3-venv
 python3 -m venv /path/to/venv
 source /path/to/venv/activate
 
+pip3 install -r requirements.txt
+
 export FLASK_APP=app.py
 export FLASK_DEBUG=1
 
