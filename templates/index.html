@@ -39,5 +39,21 @@
                 alert(JSON.parse(localStorage.getItem('profile')));
             });
         </script>
+
+        <div>
+        {% block content %}
+            {% for meme in memes %}
+                <div>
+                {{ meme }}
+                </div>
+                <div class="meme" style="background-image: url({{ meme.blank }});">
+
+                </div>
+{#            <div id="meme" style="background-image: url(http://image.tmdb.org/t/p/w500{{movie.backdrop_path}});">#}
+{#            </div>#}
+            {% endfor %}
+        {% endblock %}
+        </div>
+
     </body>
 </html>

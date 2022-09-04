@@ -1,3 +1,13 @@
 h1 {
     color: red;
 }
+
+.meme {
+    float: left;
+    width: 400px;
+    height: 250px;
+    margin: 10px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px grey;
+    background-size: cover;
+}
