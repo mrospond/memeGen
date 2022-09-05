@@ -1,3 +1,4 @@
+from urllib import request
 from flask import Flask, render_template, jsonify, redirect, send_from_directory, url_for
 
 from flask_uploads import UploadSet, IMAGES, configure_uploads
@@ -5,6 +6,10 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SubmitField
 
+import requests
+import json
+
+# testowy blueprint
 from test.second import second
 
 app = Flask(__name__)
@@ -30,7 +35,7 @@ def get_file(filename):
     return send_from_directory(app.config["UPLOADED_PHOTOS_DEST"], filename)
 
 
-
+# image upload
 @app.route("/", methods=["GET", "POST"])
 def upload_image():
     form = UploadForm()
@@ -40,21 +45,30 @@ def upload_image():
     else:
         file_url = None
 
-    return render_template("index.html", form=form, file_url=file_url)
+    req = requests.get("https://api.memegen.link/templates/")
+    data = json.loads(req.content)
 
+    return render_template("index.html", form=form, file_url=file_url, data=data)
 
-# @app.route('/home')
-# @app.route("/")
-# def hello_world():
-#     title = "memeGen"
-#     return render_template("home.html", title=title)
+# get templates from api
+@app.route("/api", methods=["GET"])
+def api():
+    req = requests.get("https://api.memegen.link/templates/")
+    data = json.loads(req.content)
+    # json.data = json.loads(data)
+    return render_template("layout.html", data=data)
 
+# testowanie bootstrapa
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
-
+# error page
 @app.route("/<text>")
 def error(text):
     page = text
-    return render_template("404.html", page=page)
+    # return render_template("404.html", page=page)
+    return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", code=302)
 
 
 @app.route("/rick")
