@@ -31,6 +31,10 @@ def get_memes():
     #meme_urls = [{meme["blank"], meme["name"]} for meme in memes]
     #return render_template("index.html", memes=meme_urls)
 
+@app.route('/meme/<url>')
+def return_meme(url):
+    return url
+
 @app.route('/data')
 def data():
     my_data = {
