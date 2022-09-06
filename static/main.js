@@ -3,12 +3,18 @@ const canvas = new fabric.Canvas('canvas', {
     height: 500,
     backgroundColor: '#fff'
 })
+canvas.preserveObjectStacking = true
 
 let file = document.getElementById('file')
 
 file.addEventListener('change', function(){
     let img = file.files[0]
     if(!img){
+        return
+    }
+    if (img['type'].split('/')[0] !== 'image') {
+        alert("You have to upload an image!")
+        file.value = null
         return
     }
     let reader = new FileReader()
@@ -42,10 +48,23 @@ addTextBtn.addEventListener('click', function(){
 })
 
 window.addEventListener('keydown', function(e){
-    if(e.key == "Delete"){
+    if(e.key === "Delete"){
         canvas.remove(canvas.getActiveObject())
     }
 })
+
+let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
+for (let i = 0; i < templates.length; i++) {
+    let template = templates[i].getElementsByTagName('img')[0]
+    template.addEventListener('click', function (){
+        fabric.Image.fromURL(template.src, function(img){
+            canvas.add(img)
+            if (img.width > canvas.width){
+                img.scaleToWidth(canvas.width)
+            }
+        })
+    })
+}
 
 let saveBtn = document.getElementById('save')
 saveBtn.addEventListener('click', function(){
