@@ -23,11 +23,21 @@ file.addEventListener('change', function(){
         let data = reader.result
         fabric.Image.fromURL(data, function(img){
             canvas.add(img)
+            if(img.width > window.innerWidth)
+            {
+                img.width = window.innerWidth;
+                console.log(img.width)
+            }
+            canvas.setHeight(img.height);
+            canvas.setWidth( img.width);
+            console.log(canvas.height)
             if(img.width > canvas.width){
-                img.scaleToWidth(canvas.width)
+
+                //img.scaleToWidth(canvas.width)
             }
         })
-        console.log(data)
+
+        console.log(canvas.height)
     }
 
     reader.readAsDataURL(img)
@@ -36,15 +46,25 @@ file.addEventListener('change', function(){
 let addTextBtn = document.getElementById('addText')
 let text = document.getElementById('text')
 let color = document.getElementById('color')
+let fontControl = document.getElementById('font-control')
+
+
+
 
 addTextBtn.addEventListener('click', function(){
-    let _text = new fabric.Text(text.value, {
+    let _text = new fabric.IText(text.value, {
+        fontFamily: fontControl.value,
         left: 100,
         top: 100,
-        fontSize: 20,
+        fontSize: 50,
         fill: color.value
     })
     canvas.add(_text)
+})
+
+fontControl.addEventListener('change', function (){
+    canvas.getActiveObject().fontFamily = fontControl.value;
+    canvas.renderAll();
 })
 
 window.addEventListener('keydown', function(e){
