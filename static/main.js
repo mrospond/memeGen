@@ -53,6 +53,19 @@ window.addEventListener('keydown', function(e){
     }
 })
 
+let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
+for (let i = 0; i < templates.length; i++) {
+    let template = templates[i].getElementsByTagName('img')[0]
+    template.addEventListener('click', function (){
+        fabric.Image.fromURL(template.src, function(img){
+            canvas.add(img)
+            if (img.width > canvas.width){
+                img.scaleToWidth(canvas.width)
+            }
+        })
+    })
+}
+
 let saveBtn = document.getElementById('save')
 saveBtn.addEventListener('click', function(){
     let data = canvas.toDataURL()
