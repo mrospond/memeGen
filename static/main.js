@@ -3,6 +3,7 @@ const canvas = new fabric.Canvas('canvas', {
     height: 500,
     backgroundColor: '#fff'
 })
+canvas.preserveObjectStacking = true
 
 let file = document.getElementById('file')
 
@@ -42,7 +43,7 @@ addTextBtn.addEventListener('click', function(){
 })
 
 window.addEventListener('keydown', function(e){
-    if(e.key == "Delete"){
+    if(e.key === "Delete"){
         canvas.remove(canvas.getActiveObject())
     }
 })
