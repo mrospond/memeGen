@@ -12,6 +12,11 @@ file.addEventListener('change', function(){
     if(!img){
         return
     }
+    if (img['type'].split('/')[0] !== 'image') {
+        alert("You have to upload an image!")
+        file.value = null
+        return
+    }
     let reader = new FileReader()
 
     reader.onload = function(e){
