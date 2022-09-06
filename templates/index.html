@@ -36,7 +36,6 @@
 </div>
 
 <div>
-    <div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Templates
@@ -49,7 +48,9 @@
                 
                     <a class="dropdown-item" href="#">
                         <img src="{{ datas['blank'] }}"  style="width: 200px;"></img>
-                        <p>{{ datas['name'] }}</p>
+                        <div style="width: 200px">
+                            <div style="width: 200px; overflow-wrap: break-word;" >{{ datas['name'] }}</div>
+                        </div>
                     </a>
                    
              
