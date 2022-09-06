@@ -38,7 +38,7 @@ let text = document.getElementById('text')
 let color = document.getElementById('color')
 
 addTextBtn.addEventListener('click', function(){
-    let _text = new fabric.Text(text.value, {
+    let _text = new fabric.IText(text.value, {
         left: 100,
         top: 100,
         fontSize: 20,
@@ -59,8 +59,16 @@ for (let i = 0; i < templates.length; i++) {
     template.addEventListener('click', function (){
         fabric.Image.fromURL(template.src, function(img){
             canvas.add(img)
-            if (img.width > canvas.width){
+            if(img.width > img.height){
                 img.scaleToWidth(canvas.width)
+                img.set({
+                    top: (canvas.height - img.getScaledHeight()) / 2
+                });
+            } else {
+                img.scaleToHeight(canvas.height)
+                img.set({
+                    left: (canvas.width - img.getScaledWidth()) / 2
+                });
             }
         })
     })
