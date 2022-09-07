@@ -26,6 +26,7 @@ file.addEventListener('change', function(){
             if(img.width > canvas.width){
                 img.scaleToWidth(canvas.width)
             }
+            centerImg(canvas, img)
         })
         console.log(data)
     }
@@ -48,7 +49,7 @@ addTextBtn.addEventListener('click', function(){
 })
 
 window.addEventListener('keydown', function(e){
-    if(e.key == "Delete" || e.key == "Backspace"){
+    if(e.key === "Delete" || e.key === "Backspace"){
         canvas.remove(canvas.getActiveObject())
     }
 })
@@ -59,19 +60,23 @@ for (let i = 0; i < templates.length; i++) {
     template.addEventListener('click', function (){
         fabric.Image.fromURL(template.src, function(img){
             canvas.add(img)
-            if(img.width > img.height){
-                img.scaleToWidth(canvas.width)
-                img.set({
-                    top: (canvas.height - img.getScaledHeight()) / 2
-                });
-            } else {
-                img.scaleToHeight(canvas.height)
-                img.set({
-                    left: (canvas.width - img.getScaledWidth()) / 2
-                });
-            }
+            centerImg(canvas, img)
         })
     })
+}
+
+function centerImg(canvas, img) {
+    if (img.width > img.height) {
+        img.scaleToWidth(canvas.width)
+        img.set({
+            top: (canvas.height - img.getScaledHeight()) / 2
+        });
+    } else {
+        img.scaleToHeight(canvas.height)
+        img.set({
+            left: (canvas.width - img.getScaledWidth()) / 2
+        });
+    }
 }
 
 canvas.on('object:moving', function (e) {
