@@ -1,7 +1,7 @@
 body {
     /* background-color:blanchedalmond;
      */
-    background: linear-gradient(to right, white, beige);
+    background: linear-gradient(to right, rgb(138, 199, 112), beige);
     color: blueviolet;
     font-style: italic;
     font-family: fantasy;
