@@ -9,8 +9,13 @@ app = Flask(__name__)
 
 @app.route("/home")
 @app.route("/")
-def test():
+def home():
     return render_template("home.html")
+
+# test your templates here
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
 # error page
 @app.route("/<text>")
@@ -26,4 +31,3 @@ def rick():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
