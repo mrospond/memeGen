@@ -1,6 +1,32 @@
+const MAX_CANVAS_WIDTH = 500;
+const MAX_CANVAS_HEIGHT = 500;
+
+const addImage = function (img, canvas) {
+    let imgWidth = img.width;
+    let imgHeight = img.height;
+    let canvasWidth = canvas.getWidth();
+    let canvasHeight = canvas.getHeight();
+
+    let imgRatio = imgWidth / imgHeight;
+    let canvasRatio = canvasWidth / canvasHeight;
+    if (imgRatio <= canvasRatio) {
+        if (imgHeight > canvasHeight) {
+            img.scaleToHeight(canvasHeight);
+        }
+    } else {
+        if (imgWidth > canvasWidth) {
+            img.scaleToWidth(canvasWidth);
+        }
+    }
+
+  canvas.clear();
+  canvas.add(img);
+  canvas.centerObject(img);
+}
+
 const canvas = new fabric.Canvas('canvas', {
-    width: 500,
-    height: 500,
+    width: MAX_CANVAS_WIDTH,
+    height: MAX_CANVAS_HEIGHT,
     backgroundColor: '#fff'
 })
 canvas.preserveObjectStacking = true
@@ -22,20 +48,20 @@ file.addEventListener('change', function(){
     reader.onload = function(e){
         let data = reader.result
         fabric.Image.fromURL(data, function(img){
-            canvas.add(img)
-            if(img.width > window.innerWidth)
-            {
-                img.width = window.innerWidth;
-                console.log(img.width)
-            }
-            canvas.setHeight(img.height);
-            canvas.setWidth( img.width);
-            console.log(canvas.height)
-            if(img.width > canvas.width){
-
-                //img.scaleToWidth(canvas.width)
-            }
-        })
+            addImage(img, canvas)
+        //     if(img.width > 500)
+        //     {
+        //         img.width = window.innerWidth/2;
+        //         console.log(img.width)
+        //     }
+        //     canvas.setHeight(img.height);
+        //     canvas.setWidth( img.width);
+        //
+        //     if(img.width > canvas.width){
+        //
+        //         //img.scaleToWidth(canvas.width)
+        //     }
+             })
 
         console.log(canvas.height)
     }
@@ -78,10 +104,7 @@ for (let i = 0; i < templates.length; i++) {
     let template = templates[i].getElementsByTagName('img')[0]
     template.addEventListener('click', function (){
         fabric.Image.fromURL(template.src, function(img){
-            canvas.add(img)
-            if (img.width > canvas.width){
-                img.scaleToWidth(canvas.width)
-            }
+            addImage(img, canvas)
         })
     })
 }
