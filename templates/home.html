@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+
+    <link rel="stylesheet" href="../static/style.css">
+
+{% endblock %}
+
+{% block content %}
+
+    <h1>Meme <i>Generator</i></h1>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="sidebar">
+
+            <p>Add Image</p>
+            <input type="file" id="file" accept="image/*">
+            <div class="group">
+                <textarea placeholder="Type something" id="text"></textarea>
+                <input type="color" id="color">
+                <button id="addText">Add Text</button>
+            </div>
+            <button id="save">Save</button>
+
+
+        <!-- templates -->
+        <div>
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Templates
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
+                        <!-- <a class="dropdown-item" href="/">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a> -->
+                        {% for datas in data %}
+                            <a class="dropdown-item" href="#">
+                                <img src="{{ datas['blank'] }}" style="width: 200px;" alt="Not found"/>
+                                <p>{{ datas['name'] }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" 
+    integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/main.js"></script>
+
+{% endblock %}

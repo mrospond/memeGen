@@ -1,5 +1,7 @@
-from urllib import request
+# from urllib import request
 from flask import Flask, render_template, redirect, send_from_directory, url_for
+
+import requests, json
 
 # test blueprint
 # from test.second import second
@@ -10,12 +12,17 @@ app = Flask(__name__)
 @app.route("/home")
 @app.route("/")
 def home():
-    return render_template("home.html")
+    req = requests.get("https://api.memegen.link/templates/")
+    data = json.loads(req.content)
+
+    return render_template("home.html", data=data)
+
 
 # test your templates here
 @app.route("/test")
 def test():
     return render_template("test.html")
+
 
 # error page
 @app.route("/<text>")
