@@ -12,10 +12,10 @@ app = Flask(__name__)
 @app.route("/home")
 @app.route("/")
 def home():
-    req = requests.get("https://api.memegen.link/templates/")
-    data = json.loads(req.content)
+    # req = requests.get("https://api.memegen.link/templates/")
+    # data = json.loads(req.content)
 
-    return render_template("home.html", data=data)
+    return render_template("home.html")
 
 
 # test your templates here
@@ -25,9 +25,7 @@ def test():
 
 @app.route("/create-meme")
 def create_meme():
-    req = requests.get("https://api.memegen.link/templates/")
-    data = json.loads(req.content)
-    return render_template("create-meme.html", data=data)
+    return render_template("create-meme.html")
 
 @app.route("/about")
 def about():
