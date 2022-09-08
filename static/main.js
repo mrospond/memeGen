@@ -43,6 +43,7 @@ $().ready(function () {
                 fabric.Image.fromURL(template.src, function (img) {
                     canvas.add(img)
                     centerImg(canvas, img)
+                    selectImg(canvas, img)
                 })
             })
         }
@@ -69,6 +70,7 @@ file.addEventListener('change', function(){
                 img.scaleToWidth(canvas.width)
             }
             centerImg(canvas, img)
+            selectImg(canvas, img)
         })
         console.log(data)
     }
@@ -110,6 +112,7 @@ searchBtn.addEventListener('click', function() {
                 fabric.Image.fromURL(img.src, function (img) {
                     canvas.add(img)
                     centerImg(canvas, img)
+                    selectImg(canvas, img)
                 })
             })
             templateList.appendChild(div)
@@ -128,6 +131,9 @@ addTextBtn.addEventListener('click', function(){
 })
 
 window.addEventListener('keydown', function(e){
+    if (isInputActive()) {
+        return
+    }
     if(e.key === "Delete" || e.key === "Backspace"){
         canvas.remove(canvas.getActiveObject())
     }
@@ -145,6 +151,21 @@ function centerImg(canvas, img) {
             left: (canvas.width - img.getScaledWidth()) / 2
         });
     }
+}
+
+function selectImg(canvas, img) {
+    if (canvas.contains(img)) {
+        canvas.setActiveObject(img)
+    }
+}
+
+function isInputActive() {
+    for (let inp of $('input, textarea')) {
+        if (document.activeElement === inp) {
+            return true
+        }
+    }
+    return false
 }
 
 canvas.on('object:moving', function (e) {
