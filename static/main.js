@@ -5,7 +5,7 @@ const canvas = new fabric.Canvas('canvas', {
     preserveObjectStacking: true
 })
 
-let file = document.getElementById('file')
+let file = $('#file')[0]
 let images = []
 
 $().ready(function () {
@@ -18,7 +18,7 @@ $().ready(function () {
             images.push(item)
         }
 
-        let dropDownMenu = document.getElementById('templates')
+        let dropDownMenu = $('#templates')[0]
         for (let _template of images) {
             let a = document.createElement('a')
             let img = document.createElement('img')
@@ -36,7 +36,7 @@ $().ready(function () {
             dropDownMenu.appendChild(a)
         }
 
-        let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
+        let templates = $('#templates a')
         for (let i = 0; i < templates.length; i++) {
             let template = templates[i].getElementsByTagName('img')[0]
             template.addEventListener('click', function () {
@@ -76,12 +76,12 @@ file.addEventListener('change', function(){
     reader.readAsDataURL(img)
 })
 
-let addTextBtn = document.getElementById('addText')
-let text = document.getElementById('text')
-let color = document.getElementById('color')
-let searchBtn = document.getElementById('searchBtn')
-let searchField = document.getElementById('searchField')
-let templateList = document.getElementById('templateResults')
+let addTextBtn = $('#addText')[0]
+let text = $('#text')[0]
+let color = $('#color')[0]
+let searchBtn = $('#searchBtn')[0]
+let searchField = $('#searchField')[0]
+let templateList = $('#templateResults')[0]
 
 searchBtn.addEventListener('click', function() {
     templateList.innerHTML = ''
@@ -148,7 +148,7 @@ function centerImg(canvas, img) {
 }
 
 canvas.on('object:moving', function (e) {
-    var obj = e.target;
+    let obj = e.target;
     // if object is too big ignore
     if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
         return;
