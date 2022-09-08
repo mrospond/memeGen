@@ -33,15 +33,6 @@
                             Templates
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
-                            <!-- <a class="dropdown-item" href="/">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a> -->
-                            {% for datas in data %}
-                                <a class="dropdown-item">
-                                    <img src="{{ datas['blank'] }}" style="width: 200px;" alt="Not found"/>
-                                    <p>{{ datas['name'] }}</p>
-                                </a>
-                            {% endfor %}
                         </div>
                     </div>
                     <div>
@@ -63,5 +54,6 @@
     integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../static/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 {% endblock %}

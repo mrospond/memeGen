@@ -5,16 +5,49 @@ const canvas = new fabric.Canvas('canvas', {
     preserveObjectStacking: true
 })
 
-let file = document.getElementById('file')
+let file = $('#file')[0]
 let images = []
 
-fetch('https://api.memegen.link/templates/')
-    .then((response) => response.json())
-    .then((data) => {
+$().ready(function () {
+    $.ajax({
+        url: 'https://api.memegen.link/templates/',
+        method: 'GET',
+        dataType: 'json'
+    }).done(function (data) {
         for (let item of data) {
             images.push(item)
         }
+
+        let dropDownMenu = $('#templates')[0]
+        for (let _template of images) {
+            let a = document.createElement('a')
+            let img = document.createElement('img')
+            let name = document.createElement('p')
+
+            a.classList.add('dropdown-item')
+
+            img.src = _template['blank']
+            img.alt = "Not found"
+            img.style.width = "200px"
+
+            name.innerText = _template['name']
+
+            a.append(img, name)
+            dropDownMenu.appendChild(a)
+        }
+
+        let templates = $('#templates a')
+        for (let i = 0; i < templates.length; i++) {
+            let template = templates[i].getElementsByTagName('img')[0]
+            template.addEventListener('click', function () {
+                fabric.Image.fromURL(template.src, function (img) {
+                    canvas.add(img)
+                    centerImg(canvas, img)
+                })
+            })
+        }
     })
+})
 
 file.addEventListener('change', function(){
     let img = file.files[0]
@@ -43,12 +76,12 @@ file.addEventListener('change', function(){
     reader.readAsDataURL(img)
 })
 
-let addTextBtn = document.getElementById('addText')
-let text = document.getElementById('text')
-let color = document.getElementById('color')
-let searchBtn = document.getElementById('searchBtn')
-let searchField = document.getElementById('searchField')
-let templateList = document.getElementById('templateResults')
+let addTextBtn = $('#addText')[0]
+let text = $('#text')[0]
+let color = $('#color')[0]
+let searchBtn = $('#searchBtn')[0]
+let searchField = $('#searchField')[0]
+let templateList = $('#templateResults')[0]
 
 searchBtn.addEventListener('click', function() {
     templateList.innerHTML = ''
@@ -100,17 +133,6 @@ window.addEventListener('keydown', function(e){
     }
 })
 
-let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
-for (let i = 0; i < templates.length; i++) {
-    let template = templates[i].getElementsByTagName('img')[0]
-    template.addEventListener('click', function () {
-        fabric.Image.fromURL(template.src, function (img) {
-            canvas.add(img)
-            centerImg(canvas, img)
-        })
-    })
-}
-
 function centerImg(canvas, img) {
     if (img.width > img.height) {
         img.scaleToWidth(canvas.width)
@@ -126,7 +148,7 @@ function centerImg(canvas, img) {
 }
 
 canvas.on('object:moving', function (e) {
-    var obj = e.target;
+    let obj = e.target;
     // if object is too big ignore
     if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
         return;
