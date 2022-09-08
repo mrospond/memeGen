@@ -8,13 +8,17 @@ const canvas = new fabric.Canvas('canvas', {
 let file = document.getElementById('file')
 let images = []
 
-fetch('https://api.memegen.link/templates/')
-    .then((response) => response.json())
-    .then((data) => {
+$().ready(function () {
+    $.ajax({
+        url: 'https://api.memegen.link/templates/',
+        method: 'GET',
+        dataType: 'json'
+    }).done(function (data) {
         for (let item of data) {
             images.push(item)
         }
     })
+})
 
 file.addEventListener('change', function(){
     let img = file.files[0]
