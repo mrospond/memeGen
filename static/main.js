@@ -6,6 +6,15 @@ const canvas = new fabric.Canvas('canvas', {
 })
 
 let file = document.getElementById('file')
+let images = []
+
+fetch('https://api.memegen.link/templates/')
+    .then((response) => response.json())
+    .then((data) => {
+        for (let item of data) {
+            images.push(item)
+        }
+    })
 
 file.addEventListener('change', function(){
     let img = file.files[0]
@@ -37,6 +46,43 @@ file.addEventListener('change', function(){
 let addTextBtn = document.getElementById('addText')
 let text = document.getElementById('text')
 let color = document.getElementById('color')
+let searchBtn = document.getElementById('searchBtn')
+let searchField = document.getElementById('searchField')
+let templateList = document.getElementById('templateResults')
+
+searchBtn.addEventListener('click', function() {
+    templateList.innerHTML = ''
+    let query = searchField.value
+    if (query === '') {
+        return
+    }
+    const regex = new RegExp("(\\s|^)" + query, 'i')
+    for (let _template of images) {
+        if (regex.test(_template.name)) {
+            let div = document.createElement('div')
+            let img = document.createElement('img')
+            let name = document.createElement('p')
+
+            div.classList.add('template-item')
+            div.style.cursor = "pointer"
+
+            img.src = _template['blank']
+            img.alt = "Not found"
+            img.style.width = "200px"
+
+            name.innerText = _template['name']
+
+            div.append(img, name)
+            div.addEventListener('click', function () {
+                fabric.Image.fromURL(img.src, function (img) {
+                    canvas.add(img)
+                    centerImg(canvas, img)
+                })
+            })
+            templateList.appendChild(div)
+        }
+    }
+})
 
 addTextBtn.addEventListener('click', function(){
     let _text = new fabric.IText(text.value, {
@@ -57,8 +103,8 @@ window.addEventListener('keydown', function(e){
 let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
 for (let i = 0; i < templates.length; i++) {
     let template = templates[i].getElementsByTagName('img')[0]
-    template.addEventListener('click', function (){
-        fabric.Image.fromURL(template.src, function(img){
+    template.addEventListener('click', function () {
+        fabric.Image.fromURL(template.src, function (img) {
             canvas.add(img)
             centerImg(canvas, img)
         })
