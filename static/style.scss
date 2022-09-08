@@ -1,0 +1,44 @@
+$myColors: (
+    primary: #005DFF,
+    primary-light: lighten(#005DFF, 40%),
+    primary-dark: darken(#005DFF, 40%),
+    accent: #FFF6BB,
+
+    a: #5d4157,
+    b: #a8caba,
+
+    c:  #616161,
+    d: #9bc5c3,
+
+    e: #c21500,
+    f: #ffc500,
+
+    g: #DE6262,
+    h: #FFB88C,
+
+    i: #a73737,
+    j: #7a2828,
+
+    k: #5f2c82,
+    l: #49a09d
+
+);
+
+@function color($color-name) {
+    @return map-get($myColors, $color-name)
+}
+// a, d
+nav {
+    background: linear-gradient(to right, color(k), color(j) );
+}
+
+footer {
+    text-align: center;
+    // background: color(i);
+    // color: white;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
