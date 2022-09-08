@@ -9,38 +9,14 @@
 
 {% block content %}
 
-<div class="container text-center">
-    <div class="row justify-content-center" style="padding: 20px">
+    <h1>Meme <i>Generator</i></h1>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="sidebar">
 
-        <div class="col-md-6 col-sm-6" style="background: blue;">
-            <canvas id="canvas" style="background-color: beige;"></canvas>
-        </div>
-
-        <div class="col-md-6 col-sm-6" style="background: brown;">
-
-            <div>
-                <div>
-                    <input type="file" id="file" accept="image/*">
-
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Templates
-                        </button>
-                        <ul class="dropdown-menu">
-          
-                            {% for d in data %}
-                                <li>
-                                    <a class="dropdown-item">
-                                        <img src="{{ d['blank'] }}" style="width: 200px;" alt="Not found"/>
-                                        <p>{{ d['name'] }}</p>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    
-                    </div>
-                
+            <p>Add Image</p>
+            <input type="file" id="file" accept="image/*">
+            <div class="group">
                 <textarea placeholder="Type something" id="text"></textarea>
                 <input type="color" id="color">
                 <button id="addText">Add Text</button>
@@ -51,7 +27,14 @@
             <!-- templates -->
             <div>
                 <div>
-                    
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Templates
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
+                        </div>
+                    </div>
                     <div>
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group">
@@ -66,13 +49,11 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" 
-integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
-crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="../static/main.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" 
+    integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 {% endblock %}
