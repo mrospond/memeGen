@@ -17,6 +17,35 @@ $().ready(function () {
         for (let item of data) {
             images.push(item)
         }
+
+        let dropDownMenu = document.getElementById('templates')
+        for (let _template of images) {
+            let a = document.createElement('a')
+            let img = document.createElement('img')
+            let name = document.createElement('p')
+
+            a.classList.add('dropdown-item')
+
+            img.src = _template['blank']
+            img.alt = "Not found"
+            img.style.width = "200px"
+
+            name.innerText = _template['name']
+
+            a.append(img, name)
+            dropDownMenu.appendChild(a)
+        }
+
+        let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
+        for (let i = 0; i < templates.length; i++) {
+            let template = templates[i].getElementsByTagName('img')[0]
+            template.addEventListener('click', function () {
+                fabric.Image.fromURL(template.src, function (img) {
+                    canvas.add(img)
+                    centerImg(canvas, img)
+                })
+            })
+        }
     })
 })
 
@@ -103,17 +132,6 @@ window.addEventListener('keydown', function(e){
         canvas.remove(canvas.getActiveObject())
     }
 })
-
-let templates = document.getElementById('templates').getElementsByClassName('dropdown-item')
-for (let i = 0; i < templates.length; i++) {
-    let template = templates[i].getElementsByTagName('img')[0]
-    template.addEventListener('click', function () {
-        fabric.Image.fromURL(template.src, function (img) {
-            canvas.add(img)
-            centerImg(canvas, img)
-        })
-    })
-}
 
 function centerImg(canvas, img) {
     if (img.width > img.height) {
