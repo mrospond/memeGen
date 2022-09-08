@@ -23,6 +23,15 @@ def home():
 def test():
     return render_template("test.html")
 
+@app.route("/create-meme")
+def create_meme():
+    req = requests.get("https://api.memegen.link/templates/")
+    data = json.loads(req.content)
+    return render_template("create-meme.html", data=data)
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 # error page
 @app.route("/<text>")
