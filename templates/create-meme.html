@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 
+{% block title %}
+
+create-meme
+
+{% endblock %}
+
+
 {% block style %}
 
     <link rel="stylesheet" href="../static/style.css">
@@ -9,51 +16,65 @@
 
 {% block content %}
 
-    <h1>Meme <i>Generator</i></h1>
-    <div class="container">
-        <canvas id="canvas"></canvas>
-        <div class="sidebar">
+<div class="container text-center">
 
-            <p>Add Image</p>
-            <input type="file" id="file" accept="image/*">
-            <div class="group">
-                <textarea placeholder="Type something" id="text"></textarea>
-                <input type="color" id="color">
-                <button id="addText">Add Text</button>
-            </div>
-            <button id="save">Save</button>
+    <div class="row justify-content-center" style="padding: 20px;">
 
+        <!-- canva -->>
+        <div  class="col-md-6 col-sm-6" style="background: blue;">
+            
+            <canvas id="canvas"></canvas>
+        </div>
 
-            <!-- templates -->
+        <!-- utils -->
+        <div class="col-md-6 col-sm-6" style="background: brown;">
             <div>
+
+                <input type="file" id="file" accept="image/*">
                 <div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Templates
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
-                        </div>
-                    </div>
+                    <textarea placeholder="Type something" id="text"></textarea>
+                    <input type="color" id="color">
+                    <button id="addText">Add Text</button>
+                </div>
+                <button id="save">Save Meme</button>
+                <button id="download">Download</button>
+    
+    
+                <!-- templates -->
+                <div>
                     <div>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" id="searchField">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Templates
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
                             </div>
-                            <button type="submit" class="btn btn-default" id="searchBtn">Find templates</button>
-                        </form>
-                    </div>
-                    <div id="templateResults">
+                        </div>
+                        <div>
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search" id="searchField">
+                                </div>
+                                <button type="submit" class="btn btn-default" id="searchBtn">Find templates</button>
+                            </form>
+                        </div>
+                        <div id="templateResults">
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+
+
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" 
-    integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../static/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js" 
+integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../static/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 {% endblock %}
