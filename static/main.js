@@ -13,6 +13,7 @@ const minHeight = 400
 
 let file = $('#file')[0]
 let images = []
+let dropDownMenu;
 
 $().ready(function () {
     $.ajax({
@@ -24,7 +25,7 @@ $().ready(function () {
             images.push(item)
         }
 
-        let dropDownMenu = $('#templates')[0]
+        dropDownMenu = $('#templates .option')[0]
         for (let _template of images) {
             let a = document.createElement('a')
             let img = document.createElement('img')
@@ -84,41 +85,21 @@ file.addEventListener('change', function(){
 let addTextBtn = $('#addText')[0]
 let text = $('#text')[0]
 let color = $('#color')[0]
-let searchBtn = $('#searchBtn')[0]
 let searchField = $('#searchField')[0]
-let templateList = $('#templateResults')[0]
 
-searchBtn.addEventListener('click', function() {
-    templateList.innerHTML = ''
+searchField.addEventListener('input', function() {
     let query = searchField.value
-    if (query === '') {
-        return
-    }
     const regex = new RegExp("(\\s|^)" + query, 'i')
-    for (let _template of images) {
-        if (regex.test(_template.name)) {
-            let div = document.createElement('div')
-            let img = document.createElement('img')
-            let name = document.createElement('p')
-
-            div.classList.add('template-item')
-            div.style.cursor = "pointer"
-
-            img.src = _template['blank']
-            img.alt = "Not found"
-            img.style.width = "200px"
-
-            name.innerText = _template['name']
-
-            div.append(img, name)
-            div.addEventListener('click', function () {
-                fabric.Image.fromURL(img.src, function (img) {
-                    canvas.add(img)
-                    addBackgroundToCanvas(canvas, img)
-                })
-            })
-            templateList.appendChild(div)
+    for (let dropdownItem of $('#templates .dropdown-item')) {
+        let pTag = dropdownItem.getElementsByTagName('p')[0]
+        if (regex.test(pTag.innerText)) {
+            dropdownItem.style.display = "block"
+            console.log(pTag.innerText, true)
+        } else {
+            dropdownItem.style.display = "none"
+            console.log(pTag.innerText, false)
         }
+
     }
 })
 
