@@ -25,10 +25,10 @@ $myColors: (
 );
 
 @function color($color-name) {
-    @return map-get($myColors, $color-name)
+    @return map-get($myColors, $color-name);
 }
-// a, d
-nav {
+
+.navbar {
     background: linear-gradient(to right, color(k), color(j) );
 }
 
@@ -53,8 +53,7 @@ body{
         margin-top: auto;
     }
 
-
-  }
+}
 
   canvas {
     padding: 0;
