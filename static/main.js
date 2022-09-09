@@ -1,9 +1,15 @@
+//default
 const canvas = new fabric.Canvas('canvas', {
     width: 500,
     height: 500,
     backgroundColor: '#fff',
     preserveObjectStacking: true
 })
+
+const maxWidth = 650
+const maxHeight = 650
+const minWidth = 400
+const minHeight = 400
 
 let file = $('#file')[0]
 let images = []
@@ -41,12 +47,14 @@ $().ready(function () {
             let template = templates[i].getElementsByTagName('img')[0]
             template.addEventListener('click', function () {
                 fabric.Image.fromURL(template.src, function (img) {
-                    canvas.add(img)
-                    centerImg(canvas, img)
-                    selectImg(canvas, img)
+                    addBackgroundToCanvas(canvas, img)
                 })
             })
         }
+        //default image
+        fabric.Image.fromURL(templates[0].getElementsByTagName('img')[0].src, function (img) {
+            addBackgroundToCanvas(canvas, img)
+        })
     })
 })
 
@@ -65,12 +73,7 @@ file.addEventListener('change', function(){
     reader.onload = function(e){
         let data = reader.result
         fabric.Image.fromURL(data, function(img){
-            canvas.add(img)
-            if(img.width > canvas.width){
-                img.scaleToWidth(canvas.width)
-            }
-            centerImg(canvas, img)
-            selectImg(canvas, img)
+            addBackgroundToCanvas(canvas, img)
         })
         console.log(data)
     }
@@ -111,8 +114,7 @@ searchBtn.addEventListener('click', function() {
             div.addEventListener('click', function () {
                 fabric.Image.fromURL(img.src, function (img) {
                     canvas.add(img)
-                    centerImg(canvas, img)
-                    selectImg(canvas, img)
+                    addBackgroundToCanvas(canvas, img)
                 })
             })
             templateList.appendChild(div)
@@ -166,6 +168,29 @@ function isInputActive() {
         }
     }
     return false
+}
+
+function addBackgroundToCanvas(canvas, img) {
+    canvas.clear()
+    img.set({"selectable":false, "evented": false})
+
+    if (img.width > maxWidth || img.height > maxHeight) {
+        if (img.width > img.height) {
+            img.scaleToWidth(maxWidth, false)
+        } else {
+            img.scaleToHeight(maxHeight, false)
+        }
+    } else if (img.width < minWidth || img.height < minHeight) {
+        if (img.width > img.height) {
+            img.scaleToHeight(minHeight, false)
+        } else {
+            img.scaleToWidth(minWidth, false)
+        }
+    }
+
+    canvas.setWidth(img.getScaledWidth())
+    canvas.setHeight(img.getScaledHeight())
+    canvas.add(img)
 }
 
 canvas.on('object:moving', function (e) {
