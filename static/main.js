@@ -94,10 +94,8 @@ searchField.addEventListener('input', function() {
         let pTag = dropdownItem.getElementsByTagName('p')[0]
         if (regex.test(pTag.innerText)) {
             dropdownItem.style.display = "block"
-            console.log(pTag.innerText, true)
         } else {
             dropdownItem.style.display = "none"
-            console.log(pTag.innerText, false)
         }
 
     }
