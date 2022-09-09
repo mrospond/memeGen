@@ -32,13 +32,33 @@ nav {
     background: linear-gradient(to right, color(k), color(j) );
 }
 
-footer {
-    text-align: center;
-    // background: color(i);
-    // color: white;
-    padding: 20px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1;
+body{ 
+    display:flex; 
+    flex-direction:column; 
+
+    height: 100vh;
+    margin: 0;
+    
+    footer {
+        text-align: center;
+        // background: color(i);
+        // color: white;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
+
+        min-height: 50px;
+        margin-top: auto;
+    }
+
+
+  }
+
+  canvas {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    width: 800px;
 }

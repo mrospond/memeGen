@@ -2,11 +2,26 @@ nav {
   background: linear-gradient(to right, #5f2c82, #7a2828);
 }
 
-footer {
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+body footer {
   text-align: center;
   padding: 20px;
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 1;
+  min-height: 50px;
+  margin-top: auto;
+}
+
+canvas {
+  padding: 0;
+  margin: 0 auto;
+  display: block;
+  width: 800px;
 }/*# sourceMappingURL=style.css.map */
