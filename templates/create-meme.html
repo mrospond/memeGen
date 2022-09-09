@@ -16,34 +16,57 @@ create-meme
 
 {% block content %}
 
-<div class="container text-center">
+<div class="container text-center row">
 
-    <div class="row justify-content-center" style="padding: 20px;">
+    <div class="row justify-content-center col-sm" style="padding: 20px;">
 
         <!-- canva -->
-        <div  class="col-sm" style="background: blue;">
+        <div  class="col-sm canvas-container">
             <canvas id="canvas"></canvas>
         </div>
+    </div>
+
+    <div class="row justify-content-center col-sm" style="padding: 20px;">
 
         <!-- utils -->
-        <div class="col-sm" style="background: brown;">
+        <div class="col-sm">
 
             <!-- upload/template -->
             <div>
-
+                <div class="select-box">
+                    <div class="options-container" id="templates">
+                      
+            
+                        <div class="option">
+                        
+        
+                        <!--wstawka-->
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="row form-group">
+        
+                                
+        
+                                <input type="text" class="form-control col-sm" placeholder="Search" id="searchField">
+                                <button type="submit" class="btn btn-default col-sm" id="searchBtn">Find templates</button>
+                            </div>
+                                            
+                            <div id="templateResults"></div>
+                        </form>
+        
+                        <!--wstawka-->
+        
+                        <!-- <input type="radio" class="radio" id="film" name="category" />
+                        <label for="film">Select Template</label> -->
+                        </div>
+            
+                    </div>
+            
+                    <div class="selected">
+                      Select Template
+                    </div>
+                </div>
 
                 
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Templates</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="templates">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="row form-group">
-                            <input type="text" class="form-control col-sm" placeholder="Search" id="searchField">
-                            <button type="submit" class="btn btn-default col-sm" id="searchBtn">Find templates</button>
-                        </div>
-                                        
-                        <div id="templateResults"></div>
-                    </form>
-                </div>
 
 
                 <input type="file" id="file" accept="image/*">
@@ -51,10 +74,21 @@ create-meme
             </div>
 
             <!-- text/color -->
-            <div>
-                <textarea placeholder="Add text" id="text"></textarea>
-                <input type="color" id="color">
-                <button id="addText">Add Text</button>
+            <div class="row">
+                <div class="col-sm">
+                    <textarea class="form-group" placeholder="Add text" id="text"></textarea>
+                </div>
+
+                <!-- <input class="col-sm" type="color" id="color"> -->
+
+                <div class="input-color-container">
+                    <input id="color" class="input-color" type="color">
+                </div>
+
+                <div class="col-sm">
+                    <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
+                </div>
+
             </div>
 
             <!-- save/download -->
