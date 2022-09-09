@@ -4,9 +4,8 @@
 
 + memeGenerator project for wwwjs course on AGH-UST
 
-<br/>
 
-## Running the application (wsl)
+## Running the application (wsl-ubuntu)
 
 1. `git clone https://github.com/mrospond/memeGen.git`
 
@@ -29,6 +28,6 @@ python3 -m flask run (OR flask run)
 3. open http://127.0.0.1:5000
 
 4. to install new modules use \
-`pip3 install <new module>` \
+`pip3 install <newModule>` \
 then to save the installed dependencies run (make sure you're using a virtual environment)\
 `pip3 freeze > requirements.txt`
