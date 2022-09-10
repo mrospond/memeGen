@@ -49,13 +49,13 @@ $().ready(function () {
             template.addEventListener('click', function () {
                 fabric.Image.fromURL(template.src, function (img) {
                     addBackgroundToCanvas(canvas, img)
-                })
+                }, {crossOrigin: 'anonymous'})
             })
         }
         //default image
         fabric.Image.fromURL(templates[0].getElementsByTagName('img')[0].src, function (img) {
             addBackgroundToCanvas(canvas, img)
-        })
+        }, {crossOrigin: 'anonymous'})
     })
 })
 
@@ -75,8 +75,7 @@ file.addEventListener('change', function(){
         let data = reader.result
         fabric.Image.fromURL(data, function(img){
             addBackgroundToCanvas(canvas, img)
-        })
-        console.log(data)
+        }, {crossOrigin: 'anonymous'})
     }
 
     reader.readAsDataURL(img)
