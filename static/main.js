@@ -119,7 +119,7 @@ window.addEventListener('keydown', function(e){
 })
 
 function selectObj(canvas, obj, ignoreContains = false) {
-    if (canvas.contains(obj) || ignoreContains) {
+    if (ignoreContains || canvas.contains(obj)) {
         canvas.setActiveObject(obj)
     }
 }
