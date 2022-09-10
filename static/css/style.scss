@@ -54,12 +54,15 @@ body{
 
 }
 
-  canvas {
-    padding: 0;
-    margin: 0 auto;
+.meme-container {
+    // margin-left: auto;
+    // display: flex;
     display: block;
-    width: 800px;
+    margin: auto;
+    text-align: center;
+    margin-top: 7rem;
 }
+
 
 .input-color-container {
     position: relative;
@@ -67,7 +70,7 @@ body{
     width: 40px;
     height: 40px;
     // border: solid 2px #ddd;
-    border-radius: 40px;
+    border-radius: 7px;
   }
   
   .input-color {
@@ -89,33 +92,31 @@ body{
   }
 
   .canvas-container {
-    border: solid 0 0 color(k)
-  }
 
-//   * {
-//     margin: 0;
-//     box-sizing: border-box;
-//   }
-  
-//   body {
-//     font-family: "Roboto", sans-serif;
-//     background: #f7f6ff;
-//   }
-  
-//   h2 {
-//     margin: 16px;
-//   }
-  
-//   .container {
-//     margin-top: 100px;
-//     padding: 32px;
-//   }
+    float: right;
+
+    // position: relative;
+    // right: 0;
+    // float: right;
+
+    canvas {
+        float: right;
+        padding: 1px;
+        border: groove lighten(color(k), 60%);
+        // margin: 0 auto;
+        // display: block;
+        width: 800px;
+    }
+    
+  }
   
   .select-box {
     display: flex;
-    width: 400px;
+    width: 1rem;
     flex-direction: column;
+
   }
+
   
   .select-box .options-container {
     background: #2f3640;
@@ -142,10 +143,9 @@ body{
   
   .selected::after {
     content: "";
-    background: url("img/arrow-down.svg");
+    // background: url("img/arrow-down.svg");
     background-size: contain;
     background-repeat: no-repeat;
-  
     position: absolute;
     height: 100%;
     width: 32px;

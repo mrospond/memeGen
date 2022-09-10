@@ -11,89 +11,105 @@
 {% block style %}
 
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        .col {
+            border: 1px solid red;
+
+        }
+
+        /* div {
+            border: 1px solid salmon;
+        } */
+    </style>
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="container text-center row">
+<div class="container meme-container">
 
-        <div class="row justify-content-center col-sm" style="padding: 20px;">
+    <div class="row">
 
-            <!-- canva -->
-            <div class="col-sm canvas-container">
-                <canvas id="canvas"></canvas>
-            </div>
+        <!-- canva -->
+
+        <div class="col canvas-container">
+            <canvas id="canvas"></canvas>
         </div>
 
-        <div class="row justify-content-center col-sm" style="padding: 20px;">
+        
+        <!--utilities-->
+        <div class="col">
 
-            <!-- utils -->
-            <div class="col-sm">
-
-                <!-- upload/template -->
-                <div>
-                    <div class="select-box">
-                        <div class="options-container" id="templates">
-                            <div class="option">
-
-                                <!--wstawka-->
-                                <form class="navbar-form navbar-left" role="search">
-                                    <div class="row form-group">
-                                        <input type="text" class="form-control col-sm" placeholder="Search"
-                                               id="searchField">
-                                    </div>
-                                </form>
-
-                                <!--wstawka-->
-
-                                <!-- <input type="radio" class="radio" id="film" name="category" />
-                                <label for="film">Select Template</label> -->
-                            </div>
-
-                        </div>
-
-                        <div class="selected">
-                            Select Template
-                        </div>
-                    </div>
-                    <input type="file" id="file" accept="image/*">
-
+            <!-- text&color -->
+            <div class="row utils-row">
+                <div class="col-sm">
+                    <textarea class="form-group" placeholder="Add text" id="text"></textarea>
                 </div>
 
-                <!-- text/color -->
-                <div class="row">
-                    <div class="col-sm">
-                        <textarea class="form-group" placeholder="Add text" id="text"></textarea>
-                    </div>
+                <!-- <input class="col-sm" type="color" id="color"> -->
 
-                    <!-- <input class="col-sm" type="color" id="color"> -->
-
+                <div class="col-sm">
                     <div class="input-color-container">
                         <input id="color" class="input-color" type="color">
                     </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
-                    </div>
-
                 </div>
 
-                <!-- save/download -->
-                <div>
+                <div class="col-sm">
+                    <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
+                </div>
+
+                
+                <div class="col-sm">
                     <button type="button" class="btn btn-dark" id="save">Save Meme</button>
                 </div>
 
             </div>
 
+            <!--templates&upload-->
+            <div class="row utils-row">
+                <div class="col select-box">
+                    <div class="options-container" id="templates">
+                        <div class="option">
+
+                            <!--wstawka-->
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="row form-group">
+                                    <input type="text" class="form-control col-sm" placeholder="Search"
+                                            id="searchField">
+                                </div>
+                            </form>
+
+                            <!--wstawka-->
+
+                            <!-- <input type="radio" class="radio" id="film" name="category" />
+                            <label for="film">Select Template</label> -->
+                        </div>
+
+                    </div>
+
+                    <div class="selected">
+                        Select Template
+                    </div>
+
+                </div>
+
+                <div class="col">
+                    <input type="file" id="file" accept="image/*">
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js"
-            integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../static/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js"
+        integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../static/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 {% endblock %}
