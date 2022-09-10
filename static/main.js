@@ -134,9 +134,9 @@ function centerImg(canvas, img) {
     }
 }
 
-function selectImg(canvas, img) {
-    if (canvas.contains(img)) {
-        canvas.setActiveObject(img)
+function selectObj(canvas, obj, ignoreContains = false) {
+    if (canvas.contains(obj) || ignoreContains) {
+        canvas.setActiveObject(obj)
     }
 }
 
@@ -190,6 +190,32 @@ canvas.on('object:moving', function (e) {
         obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
     }
 });
+
+canvas.on('mouse:dblclick', function(e) {
+    if (canvas.getActiveObjects().length) {
+        return
+    }
+    let position = getMouseCoords(canvas, e)
+    let text = new fabric.IText('Write something funny', {
+        fontSize: 50,
+        fill: '#ffffff'
+    })
+    text.left = position.x - text.width / 2
+    text.top = position.y - text.height / 2
+
+    canvas.add(text)
+    text.enterEditing()
+    text.selectAll()
+    selectObj(canvas, text, true)
+})
+
+function getMouseCoords(canvas, e) {
+  let pointer = canvas.getPointer(e, true);
+  return {
+      x: pointer.x,
+      y: pointer.y
+  }
+}
 
 let saveBtn = document.getElementById('save')
 saveBtn.addEventListener('click', function(){
