@@ -40,7 +40,7 @@ body{
     
     footer {
         text-align: center;
-        // background: color(i);
+        // background: color(k);
         // color: white;
         padding: 20px;
         position: fixed;
@@ -54,13 +54,44 @@ body{
 
 }
 
+
 .meme-container {
     // margin-left: auto;
     // display: flex;
     display: block;
     margin: auto;
     text-align: center;
-    margin-top: 7rem;
+    margin-top: 5rem;
+
+    
+}
+
+.utils-row {
+    background-color: lighten(color(c), 40%);
+    // color: #616161;
+    padding: 1em;
+    border-radius: 40px;
+    // border: 2px solid transparent;
+
+    outline: none;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+
+
+}
+
+textarea {
+    background-color: lighten(color(c),50%);
+    color: #616161;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+
 }
 
 
@@ -102,7 +133,7 @@ body{
     canvas {
         float: right;
         padding: 1px;
-        border: groove lighten(color(k), 60%);
+        border: 3px groove lighten(color(k), 60%);
         // margin: 0 auto;
         // display: block;
         width: 800px;

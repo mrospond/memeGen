@@ -23,7 +23,29 @@ body footer {
   display: block;
   margin: auto;
   text-align: center;
-  margin-top: 7rem;
+  margin-top: 5rem;
+}
+
+.utils-row {
+  background-color: #c7c7c7;
+  padding: 1em;
+  border-radius: 40px;
+  outline: none;
+  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+textarea {
+  background-color: #e1e1e1;
+  color: #616161;
+  padding: 1em;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  outline: none;
+  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 .input-color-container {
@@ -58,7 +80,7 @@ body footer {
 .canvas-container canvas {
   float: right;
   padding: 1px;
-  border: groove #f1e9f7;
+  border: 3px groove #f1e9f7;
   width: 800px;
 }
 
