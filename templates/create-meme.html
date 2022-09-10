@@ -11,16 +11,6 @@
 {% block style %}
 
     <link rel="stylesheet" href="../static/css/style.css">
-    <style>
-        .col {
-            border: 1px solid red;
-
-        }
-
-        /* div {
-            border: 1px solid salmon;
-        } */
-    </style>
 
 {% endblock %}
 
@@ -40,65 +30,71 @@
         <!--utilities-->
         <div class="col">
 
-            <!-- text&color -->
             <div class="row utils-row">
-                <div class="col-sm">
-                    <textarea class="form-group" placeholder="Add text" id="text"></textarea>
-                </div>
-
-                <!-- <input class="col-sm" type="color" id="color"> -->
-
-                <div class="col-sm">
-                    <div class="input-color-container">
-                        <input id="color" class="input-color" type="color">
+                <!-- text&color -->
+                <div class="row">
+                    <div class="col-sm">
+                        <textarea placeholder="Add text" id="text"></textarea>
                     </div>
+
+                    <!-- <input class="col-sm" type="color" id="color"> -->
+
+                    <div class="col-sm">
+                        <div class="input-color-container">
+                            <input id="color" class="input-color" type="color">
+                        </div>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
+                    </div>
+
+                    
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-dark" id="download">Download</button>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-dark" id="share">Save as link</button>
+                    </div>
+
                 </div>
 
-                <div class="col-sm">
-                    <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
-                </div>
+                <!--templates&upload-->
+                <div class="row">
+                    <div class="col select-box">
+                        <div class="options-container" id="templates">
+                            <div class="option">
 
-                
-                <div class="col-sm">
-                    <button type="button" class="btn btn-dark" id="save">Save Meme</button>
-                </div>
+                                <!--wstawka-->
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="row">
+                                        <input type="text" class="form-control col-sm" placeholder="Search"
+                                                id="searchField">
+                                    </div>
+                                </form>
 
-            </div>
+                                <!--wstawka-->
 
-            <!--templates&upload-->
-            <div class="row utils-row">
-                <div class="col select-box">
-                    <div class="options-container" id="templates">
-                        <div class="option">
+                                <!-- <input type="radio" class="radio" id="film" name="category" />
+                                <label for="film">Select Template</label> -->
+                            </div>
 
-                            <!--wstawka-->
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="row form-group">
-                                    <input type="text" class="form-control col-sm" placeholder="Search"
-                                            id="searchField">
-                                </div>
-                            </form>
+                        </div>
 
-                            <!--wstawka-->
-
-                            <!-- <input type="radio" class="radio" id="film" name="category" />
-                            <label for="film">Select Template</label> -->
+                        <div class="selected">
+                            Select Template
                         </div>
 
                     </div>
 
-                    <div class="selected">
-                        Select Template
+                    <div class="col">
+                        <input type="file" id="file" accept="image/*">
                     </div>
-
                 </div>
 
-                <div class="col">
-                    <input type="file" id="file" accept="image/*">
-                </div>
+
             </div>
-
-
 
         </div>
     </div>
