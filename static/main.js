@@ -106,7 +106,10 @@ addTextBtn.addEventListener('click', function(){
         left: 100,
         top: 100,
         fontSize: 20,
-        fill: color.value
+        fill: color.value,
+        align: 'mid',
+        originX: 'center',
+        originY: 'center',
     })
     canvas.add(_text)
 })
@@ -119,20 +122,6 @@ window.addEventListener('keydown', function(e){
         canvas.remove(canvas.getActiveObject())
     }
 })
-
-function centerImg(canvas, img) {
-    if (img.width > img.height) {
-        img.scaleToWidth(canvas.width)
-        img.set({
-            top: (canvas.height - img.getScaledHeight()) / 2
-        });
-    } else {
-        img.scaleToHeight(canvas.height)
-        img.set({
-            left: (canvas.width - img.getScaledWidth()) / 2
-        });
-    }
-}
 
 function selectObj(canvas, obj, ignoreContains = false) {
     if (canvas.contains(obj) || ignoreContains) {
@@ -198,10 +187,13 @@ canvas.on('mouse:dblclick', function(e) {
     let position = getMouseCoords(canvas, e)
     let text = new fabric.IText('Write something funny', {
         fontSize: 50,
-        fill: '#ffffff'
+        fill: '#ffffff',
+        align: 'mid',
+        originX: 'center',
+        originY: 'center',
+        left: position.x,
+        top: position.y
     })
-    text.left = position.x - text.width / 2
-    text.top = position.y - text.height / 2
 
     canvas.add(text)
     text.enterEditing()
