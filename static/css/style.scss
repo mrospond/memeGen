@@ -55,6 +55,16 @@ body{
 }
 
 
+.regex-highlight {
+    background-color: forestgreen;
+  }
+  
+  .regex-normal {
+    background-color: inherit;
+  }
+
+
+
 .meme-container {
     // margin-left: auto;
     // display: flex;
@@ -63,8 +73,37 @@ body{
     text-align: center;
     margin-top: 5rem;
 
-    
+
 }
+
+.utils-row {
+    background-color: lighten(color(c), 40%);
+    // color: #616161;
+    padding: 1em;
+    border-radius: 40px;
+    // border: 2px solid transparent;
+
+    outline: none;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+
+
+}
+
+textarea {
+    background-color: lighten(color(c),50%);
+    color: #616161;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+
+}
+
 
 .utils-row {
     background-color: lighten(color(c), 40%);
