@@ -185,10 +185,35 @@ canvas.on('mouse:dblclick', function(e) {
         fill: '#ffffff',
         align: 'mid',
         originX: 'center',
-        originY: 'center',
-        left: position.x,
-        top: position.y
+        originY: 'center'
     })
+
+    if (text.width > canvas.width) {
+        text.scaleToWidth(canvas.width, false)
+    }
+
+    // set text in canvas boundary (x)
+    if (position.x - text.width / 2 < 0) {
+        text.left = text.width / 2
+    } else if (position.x + text.width / 2 > canvas.width) {
+        text.left = canvas.width - text.width / 2
+    } else {
+        text.left = position.x
+    }
+
+    // set text in canvas boundary(y)
+    if (position.y - text.height / 2 < 0) {
+        text.top = text.height / 2
+    } else if (position.y + text.height / 2 > canvas.height) {
+        text.top = canvas.height - text.height / 2
+    } else {
+        text.top = position.y
+    }
+
+
+    if (position.y - text.height / 2 < 0) {
+        text.top = text.height / 2
+    }
 
     canvas.add(text)
     text.enterEditing()
