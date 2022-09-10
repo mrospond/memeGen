@@ -81,6 +81,7 @@ let addTextBtn = $('#addText')[0]
 let text = $('#text')[0]
 let color = $('#color')[0]
 let searchField = $('#searchField')[0]
+let fontControl = document.getElementById('font-control')
 
 searchField.addEventListener('input', function() {
     let query = searchField.value
@@ -99,6 +100,7 @@ searchField.addEventListener('input', function() {
 
 addTextBtn.addEventListener('click', function(){
     let _text = new fabric.IText(text.value, {
+        fontFamily: fontControl.value,
         left: 100,
         top: 100,
         fontSize: 20,
@@ -108,6 +110,11 @@ addTextBtn.addEventListener('click', function(){
         originY: 'center',
     })
     canvas.add(_text)
+})
+
+fontControl.addEventListener('change', function (){
+    canvas.getActiveObject().fontFamily = fontControl.value;
+    canvas.renderAll();
 })
 
 window.addEventListener('keydown', function(e){
