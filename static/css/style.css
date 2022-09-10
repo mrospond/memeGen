@@ -56,6 +56,14 @@ canvas {
   border: solid 0 0 #5f2c82;
 }
 
+.regex-highlight {
+  background-color: forestgreen;
+}
+
+.regex-normal {
+  background-color: inherit;
+}
+
 .select-box {
   display: flex;
   width: 400px;
