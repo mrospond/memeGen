@@ -89,6 +89,7 @@ searchField.addEventListener('input', function() {
         let pTag = dropdownItem.getElementsByTagName('p')[0]
         if (regex.test(pTag.innerText)) {
             dropdownItem.style.display = "block"
+            highlightRegex(pTag, query)
         } else {
             dropdownItem.style.display = "none"
         }
@@ -117,6 +118,55 @@ window.addEventListener('keydown', function(e){
         canvas.remove(canvas.getActiveObject())
     }
 })
+
+function highlightRegex(pTag, query) {
+    let text = pTag.innerText
+    pTag.innerHTML = ''
+    let matched = getIndicesOf(query, text, false)
+
+    let lastNormalIndex = 0
+    for (let index of matched) {
+        if (index > lastNormalIndex) {
+            let normalSpan = document.createElement('span')
+            normalSpan.classList.add('regex-normal')
+
+            normalSpan.innerText = text.substring(lastNormalIndex, index)
+            pTag.appendChild(normalSpan)
+        }
+
+        let regexSpan = document.createElement('span')
+        regexSpan.classList.add('regex-highlight')
+
+        regexSpan.innerText = text.substr(index, query.length)
+        pTag.appendChild(regexSpan)
+        lastNormalIndex = index + query.length
+    }
+
+    if (text.substring(lastNormalIndex)) {
+        let normalSpan = document.createElement('span')
+        normalSpan.classList.add('regex-normal')
+
+        normalSpan.innerText = text.substring(lastNormalIndex)
+        pTag.appendChild(normalSpan)
+    }
+}
+
+function getIndicesOf(searchStr, str, caseSensitive) {
+    let searchStrLen = searchStr.length;
+    if (searchStrLen === 0) {
+        return [];
+    }
+    let startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
 
 function selectObj(canvas, obj, ignoreContains = false) {
     if (ignoreContains || canvas.contains(obj)) {
