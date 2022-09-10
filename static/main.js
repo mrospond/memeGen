@@ -52,10 +52,6 @@ $().ready(function () {
                 }, {crossOrigin: 'anonymous'})
             })
         }
-        //default image
-        fabric.Image.fromURL(templates[0].getElementsByTagName('img')[0].src, function (img) {
-            addBackgroundToCanvas(canvas, img)
-        }, {crossOrigin: 'anonymous'})
     })
 })
 
