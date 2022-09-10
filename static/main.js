@@ -279,7 +279,7 @@ function getMouseCoords(canvas, e) {
   }
 }
 
-let saveBtn = document.getElementById('save')
+let saveBtn = document.getElementById('download')
 saveBtn.addEventListener('click', function(){
     let data = canvas.toDataURL()
     let link = document.createElement('a')
