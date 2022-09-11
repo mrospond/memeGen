@@ -147,7 +147,8 @@ const snake = {
             this.updateTail(newPos)
             this.tail.push(tailEnd)
             tailLost = false
-            pieCounterElement.innerText = 'Zjedzone kremówki: ' + ++pieCounter
+            pieCounter++
+            pieCounterElement.innerText = 'Zjedzone kremówki: ' + '2137 - ' + (2137 - pieCounter) + ' = ' + pieCounter
             gameArea.spawnPie()
         }
 
