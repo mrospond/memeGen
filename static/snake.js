@@ -1,14 +1,17 @@
 const frameRate = 60
 const deltaTime = Math.floor(1000 / frameRate)
-const cellSize = 10
-const xCells = 28
-const yCells = 28
+const cellSize = 20
+const xCells = 15
+const yCells = 15
 const keysToDirections = {
     'ArrowLeft': 'left',
     'ArrowRight': 'right',
     'ArrowUp': 'up',
     'ArrowDown' : 'down'
 }
+const pieSrc = '../static/img/pie.png'
+let pie
+
 let frames = 0
 
 const gameArea = {
@@ -23,6 +26,25 @@ const gameArea = {
 
         this.canvas.classList.add('snake')
         $('#game')[0].appendChild(this.canvas)
+    },
+    spawnPie: function () {
+        let spawned = false
+        let cell
+        while (!spawned) {
+            cell = {
+                cellX: getRandomInt(0, xCells),
+                cellY: getRandomInt(0, yCells)
+            }
+            for (let i = 0; i < snake.tail.length; i++) {
+                if (snake.tail[i].cellX === cell.cellX && snake.tail[i].cellY === cell.cellY) {
+                    break
+                }
+                spawned = true
+            }
+        }
+
+        gameArea.pieLocation = cell
+        console.log('Spawned pie at: ' + cell.cellX + ' ' + cell.cellY)
     }
 }
 
@@ -34,8 +56,8 @@ const snake = {
         cellY: 7
     },
     direction: 'right',
-    keyPressQueue: [],
-    speed: 15,
+    speed: 10,
+    dead: false,
     init: function () {
         for (let i = 0; i < this.tailLength; i++) {
             this.tail.push({
@@ -43,7 +65,6 @@ const snake = {
                 cellY: this.startPos.cellY
             })
         }
-        this._deltaPosition = deltaTime * ((this.speed * cellSize) / 1000)
     },
     changeDirection: function (direction) {
         if (this.direction === 'up' && direction === 'down') {
@@ -59,7 +80,7 @@ const snake = {
             return;
         }
         this.direction = direction
-        //this.keyPressQueue.push(direction)
+        console.log(direction)
     },
     updateTail: function (newPosition) {
         let newPos = newPosition
@@ -71,8 +92,7 @@ const snake = {
     },
     move: function () {
         let newPos
-        console.log('Tail head: ' + this.tail[0].cellX + ' ' + this.tail[0].cellY)
-        console.log(this.direction)
+        //console.log('Tail head: ' + this.tail[0].cellX + ' ' + this.tail[0].cellY)
         if (this.direction === 'left') {
             newPos = {cellX: this.tail[0].cellX - 1, cellY: this.tail[0].cellY}
         } else if (this.direction === 'right') {
@@ -82,23 +102,67 @@ const snake = {
         } else if (this.direction === 'up') {
             newPos = {cellX: this.tail[0].cellX, cellY: this.tail[0].cellY - 1}
         }
-        let lostTailEnd = this.tail[this.tail.length - 1]
-        this.updateTail(newPos)
+
+        let tailEnd = this.tail[this.tail.length - 1]
+        let tailLost
+
+        if ((newPos.cellX >= xCells || newPos.cellY >= yCells || newPos.cellX < 0 || newPos.cellY < 0)
+            || headOverlaps(this.tail)) {
+            this.die()
+        }
+
+        // eat pie
+        if (!gameArea.pieLocation ||
+            (newPos.cellX !== gameArea.pieLocation.cellX || newPos.cellY !== gameArea.pieLocation.cellY)){
+            this.updateTail(newPos)
+            tailLost = true
+        } else {
+            this.tailLength++
+            this.updateTail(newPos)
+            this.tail.push(tailEnd)
+            tailLost = false
+            gameArea.spawnPie()
+        }
+
         return {
             nextDirection: this.direction,
-            lostTailEnd: lostTailEnd
+            tailLost: tailLost,
+            tailEnd: tailEnd
         }
+    },
+    die: function () {
+        this.dead = true
     }
 }
 
+function headOverlaps(tail) {
+    let head = tail[0]
+    for (let i = 1; i < tail.length; i++) {
+        if (head.cellX === tail[i].cellX && head.cellY === tail[i].cellY) {
+            return true
+        }
+    }
+    return false
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 function refreshArea() {
+    if (snake.dead) {
+        defeatText.style = 'display: block'
+        return
+    }
     let mod = Math.round(frameRate / snake.speed)
     let sequenceNum = frames % mod
     if (sequenceNum === 0) {
-        console.log('Moved')
         let tuple = snake.move()
         nextDirection = tuple.nextDirection
-        lostTailEnd = tuple.lostTailEnd
+        lostTailEnd = tuple.tailEnd
+        tailLost = tuple.tailLost
     }
     gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
     for (let i = 1; i < snake.tail.length; i++) {
@@ -106,7 +170,8 @@ function refreshArea() {
     }
     let tailEndNextDirection = getTailEndNextDirection(lostTailEnd, snake.tail[snake.tail.length - 1])
     renderTailHead(snake.tail[0], nextDirection, sequenceNum, mod)
-    renderTailEnd(lostTailEnd, tailEndNextDirection, sequenceNum, mod)
+    renderTailEnd(lostTailEnd, tailEndNextDirection, sequenceNum, mod, tailLost)
+    renderPie()
 
     frames++
     setTimeout(refreshArea, deltaTime)
@@ -125,7 +190,10 @@ function renderTailHead(head, nextDirection, sequenceNum, mod) {
     }
 }
 
-function renderTailEnd(tailEnd, nextDirection, sequenceNum, mod) {
+function renderTailEnd(tailEnd, nextDirection, sequenceNum, mod, tailLost) {
+    if (!tailLost) {
+        return
+    }
     let scale = (sequenceNum + 1) / mod
     if (nextDirection === 'left') {
         gameArea.context.fillRect(tailEnd.cellX * cellSize, tailEnd.cellY * cellSize, (1 - scale) * cellSize, cellSize)
@@ -136,6 +204,21 @@ function renderTailEnd(tailEnd, nextDirection, sequenceNum, mod) {
     } else if (nextDirection === 'up') {
         gameArea.context.fillRect(tailEnd.cellX * cellSize, tailEnd.cellY * cellSize, cellSize, (1 - scale) * cellSize)
     }
+}
+
+function renderPie() {
+    if (!pie) {
+        pie = new Image(cellSize, cellSize)
+        pie.onload = function () {
+            gameArea.context.drawImage(pie, gameArea.pieLocation.cellX * cellSize,
+                gameArea.pieLocation.cellY * cellSize, cellSize, cellSize);
+        }
+        pie.src = pieSrc
+    } else {
+        gameArea.context.drawImage(pie, gameArea.pieLocation.cellX * cellSize,
+            gameArea.pieLocation.cellY * cellSize, cellSize, cellSize);
+    }
+
 }
 
 function getTailEndNextDirection(lostTailEnd, currentTailEnd) {
@@ -156,14 +239,20 @@ function getTailEndNextDirection(lostTailEnd, currentTailEnd) {
 function initGame() {
     snake.init()
     gameArea.init()
+    gameArea.spawnPie()
+    renderPie()
 }
 
 let nextDirection
 let lostTailEnd
-function startGame() {
+let tailLost
+
+const startButton = $('#start')[0]
+const defeatText = $('#defeatText')[0]
+startButton.addEventListener('click', function () {
     console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
     refreshArea()
-}
+})
 
 $().ready(function () {
     initGame()

@@ -26,6 +26,11 @@ canvas {
   width: 800px;
 }
 
+#defeatText {
+  text-align: center;
+  color: red;
+}
+
 .input-color-container {
   position: relative;
   overflow: hidden;

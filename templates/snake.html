@@ -15,6 +15,13 @@
 {% endblock %}
 
 {% block content %}
-    <div id="game"></div>
+    <div id="game">
+        <div style="display: none">
+            <img id="pie"
+                 src="../static/img/pie.png">
+        </div>
+    </div>
+    <button id="start">Play!</button>
+    <h3 id="defeatText" style="display: none">You lost!</h3>
     <script src="../static/snake.js">
 {% endblock %}
