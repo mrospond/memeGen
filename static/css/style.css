@@ -24,11 +24,19 @@ canvas {
   margin: 0 auto;
   display: block;
   width: 800px;
+  background-image: url("../img/board.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 #defeatText {
   text-align: center;
   color: red;
+}
+
+#game {
+
 }
 
 .input-color-container {

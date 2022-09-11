@@ -1,6 +1,6 @@
 const frameRate = 60
 const deltaTime = Math.floor(1000 / frameRate)
-const cellSize = 20
+const cellSize = 30
 const xCells = 15
 const yCells = 15
 const keysToDirections = {
@@ -10,7 +10,17 @@ const keysToDirections = {
     'ArrowDown' : 'down'
 }
 const pieSrc = '../static/img/pie.png'
+const snakeHeadSrc = '../static/img/face.png'
+
+const startButton = $('#start')[0]
+const replayButton = $('#replay')[0]
+const defeatText = $('#defeatText')[0]
+const game = $('#game')[0]
+game.width = xCells * cellSize
+game.height = yCells * cellSize
+
 let pie
+let snakeHead
 
 let frames = 0
 
@@ -23,9 +33,10 @@ const gameArea = {
         this.canvas.style.width = xCells * cellSize + 'px';
         this.canvas.style.height = yCells * cellSize + 'px';
         this.context = this.canvas.getContext('2d')
+        this.context.fillStyle = '#ffde00'
 
         this.canvas.classList.add('snake')
-        $('#game')[0].appendChild(this.canvas)
+        game.insertBefore(this.canvas, game.firstChild)
     },
     spawnPie: function () {
         let spawned = false
@@ -56,6 +67,7 @@ const snake = {
         cellY: 7
     },
     direction: 'right',
+    directionChanged: false,
     speed: 10,
     dead: false,
     init: function () {
@@ -65,6 +77,16 @@ const snake = {
                 cellY: this.startPos.cellY
             })
         }
+    },
+    reset: function () {
+        snake.tail = []
+        snake.tailLength = 4
+        snake.startPos = {
+            cellX: 7,
+            cellY: 7
+        }
+        snake.direction = 'right'
+        snake.dead = false
     },
     changeDirection: function (direction) {
         if (this.direction === 'up' && direction === 'down') {
@@ -80,7 +102,8 @@ const snake = {
             return;
         }
         this.direction = direction
-        console.log(direction)
+        this.directionChanged = true
+        //console.log(direction)
     },
     updateTail: function (newPosition) {
         let newPos = newPosition
@@ -125,7 +148,7 @@ const snake = {
         }
 
         return {
-            nextDirection: this.direction,
+            nextDirection: this.direction.slice(),
             tailLost: tailLost,
             tailEnd: tailEnd
         }
@@ -154,6 +177,8 @@ function getRandomInt(min, max) {
 function refreshArea() {
     if (snake.dead) {
         defeatText.style = 'display: block'
+        startButton.style = 'display: none'
+        replayButton.style = 'display: block'
         return
     }
     let mod = Math.round(frameRate / snake.speed)
@@ -168,8 +193,9 @@ function refreshArea() {
     for (let i = 1; i < snake.tail.length; i++) {
         gameArea.context.fillRect(snake.tail[i].cellX * cellSize, snake.tail[i].cellY * cellSize, cellSize, cellSize)
     }
-    let tailEndNextDirection = getTailEndNextDirection(lostTailEnd, snake.tail[snake.tail.length - 1])
-    renderTailHead(snake.tail[0], nextDirection, sequenceNum, mod)
+    let tailEndNextDirection = getTailNodeNextDirection(lostTailEnd, snake.tail[snake.tail.length - 1])
+    renderTailSubHead(snake.tail[0], nextDirection, sequenceNum, mod)
+    //renderTailHead(snake.tail[0], subHeadCoords, nextDirection, tailSubHeadNextDirection, sequenceNum, mod)
     renderTailEnd(lostTailEnd, tailEndNextDirection, sequenceNum, mod, tailLost)
     renderPie()
 
@@ -177,17 +203,87 @@ function refreshArea() {
     setTimeout(refreshArea, deltaTime)
 }
 
-function renderTailHead(head, nextDirection, sequenceNum, mod) {
+function renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod) {
+    if (!snakeHead) {
+        snakeHead = new Image(cellSize, cellSize)
+        snakeHead.onload = function () {
+            _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod)
+        }
+        snakeHead.src = snakeHeadSrc
+    } else {
+        _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod)
+    }
+}
+
+function _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod) {
     let scale = (sequenceNum + 1) / mod
     if (nextDirection === 'left') {
-        gameArea.context.fillRect((head.cellX + (1 - scale)) * cellSize, head.cellY * cellSize, scale * cellSize, cellSize)
+        gameArea.context.drawImage(snakeHead, (subHeadCoords.cellX + (1 - scale)) * cellSize, subHeadCoords.cellY * cellSize, cellSize, cellSize)
     } else if (nextDirection === 'right') {
-        gameArea.context.fillRect(head.cellX * cellSize, head.cellY * cellSize, scale * cellSize, cellSize)
+        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, subHeadCoords.cellY * cellSize, cellSize, cellSize)
     } else if (nextDirection === 'down') {
-        gameArea.context.fillRect(head.cellX * cellSize, head.cellY * cellSize , cellSize, scale * cellSize)
+        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, subHeadCoords.cellY * cellSize , cellSize, cellSize)
     } else if (nextDirection === 'up') {
-        gameArea.context.fillRect(head.cellX * cellSize, (head.cellY + (1 - scale)) * cellSize, cellSize, scale * cellSize)
+        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, (subHeadCoords.cellY + (1 - scale)) * cellSize, cellSize, cellSize)
     }
+}
+
+function renderImage(imgX, imgY) {
+    if (!snakeHead) {
+        snakeHead = new Image(cellSize, cellSize)
+        snakeHead.onload = function () {
+            gameArea.context.drawImage(snakeHead, imgX, imgY, cellSize, cellSize)
+        }
+        snakeHead.src = snakeHeadSrc
+    } else {
+        gameArea.context.drawImage(snakeHead, imgX, imgY, cellSize, cellSize)
+    }
+}
+
+function renderTailSubHead(subHead, direction, sequenceNum, mod) {
+    let scale = (sequenceNum + 1) / mod
+    let coords
+    if (direction === 'left') {
+        coords = {
+            x: (subHead.cellX + (1 - scale)) * cellSize,
+            y: subHead.cellY * cellSize,
+            width: scale * cellSize,
+            height: cellSize,
+            imgX: (subHead.cellX - scale + 1) * cellSize,
+            imgY: subHead.cellY * cellSize
+        }
+    } else if (direction === 'right') {
+        coords = {
+            x: subHead.cellX * cellSize,
+            y: subHead.cellY * cellSize,
+            width: scale * cellSize,
+            height: cellSize,
+            imgX: (subHead.cellX + scale - 1) * cellSize,
+            imgY: subHead.cellY * cellSize
+        }
+    } else if (direction === 'down') {
+        coords = {
+            x: subHead.cellX * cellSize,
+            y: subHead.cellY * cellSize,
+            width: cellSize,
+            height: scale * cellSize,
+            imgX: subHead.cellX * cellSize,
+            imgY: (subHead.cellY + scale - 1) * cellSize
+        }
+    } else if (direction === 'up') {
+        coords = {
+            x: subHead.cellX * cellSize,
+            y: (subHead.cellY + (1 - scale)) * cellSize,
+            width: cellSize,
+            height: scale * cellSize,
+            imgX: subHead.cellX * cellSize,
+            imgY: (subHead.cellY - scale + 1) * cellSize
+        }
+    }
+    gameArea.context.fillRect(coords.x, coords.y, coords.width, coords.height)
+    renderImage(coords.imgX, coords.imgY)
+
+    return coords
 }
 
 function renderTailEnd(tailEnd, nextDirection, sequenceNum, mod, tailLost) {
@@ -218,20 +314,19 @@ function renderPie() {
         gameArea.context.drawImage(pie, gameArea.pieLocation.cellX * cellSize,
             gameArea.pieLocation.cellY * cellSize, cellSize, cellSize);
     }
-
 }
 
-function getTailEndNextDirection(lostTailEnd, currentTailEnd) {
-    if (currentTailEnd.cellX - lostTailEnd.cellX < 0) {
+function getTailNodeNextDirection(previous, next) {
+    if (next.cellX - previous.cellX < 0) {
         return 'left'
     }
-    if (currentTailEnd.cellX - lostTailEnd.cellX > 0) {
+    if (next.cellX - previous.cellX > 0) {
         return 'right'
     }
-    if (currentTailEnd.cellY - lostTailEnd.cellY > 0) {
+    if (next.cellY - previous.cellY > 0) {
         return 'down'
     }
-    if (currentTailEnd.cellY - lostTailEnd.cellY < 0) {
+    if (next.cellY - previous.cellY < 0) {
         return 'up'
     }
 }
@@ -247,10 +342,18 @@ let nextDirection
 let lostTailEnd
 let tailLost
 
-const startButton = $('#start')[0]
-const defeatText = $('#defeatText')[0]
 startButton.addEventListener('click', function () {
     console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
+    refreshArea()
+})
+replayButton.addEventListener('click', function () {
+    snake.reset()
+    snake.init()
+    gameArea.spawnPie()
+    renderPie()
+    console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
+    startButton.style = 'display: block'
+    replayButton.style = 'display: none'
     refreshArea()
 })
 
@@ -258,7 +361,6 @@ $().ready(function () {
     initGame()
     window.addEventListener('keydown', function (e) {
         if (keysToDirections[e.key]) {
-            console.log(keysToDirections[e.key])
             snake.changeDirection(keysToDirections[e.key])
         }
     })
