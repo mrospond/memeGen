@@ -59,6 +59,9 @@ const gameArea = {
 
         gameArea.pieLocation = cell
         console.log('Spawned pie at: ' + cell.cellX + ' ' + cell.cellY)
+        for (let i = 0; i < snake.tail.length; i++) {
+            console.log(i + ': ' + snake.tail[i].cellX + ' ' + snake.tail[i].cellY)
+        }
     }
 }
 
