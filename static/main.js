@@ -6,13 +6,13 @@ const canvas = new fabric.Canvas('canvas', {
     preserveObjectStacking: true
 })
 
-const maxWidth = 650
-const maxHeight = 650
-const minWidth = 400
-const minHeight = 400
+const maxWidth = 650;
+const maxHeight = 650;
+const minWidth = 400;
+const minHeight = 400;
 
-let file = $('#file')[0]
-let images = []
+let file = $('#file')[0];
+let images = [];
 let dropDownMenu;
 
 $().ready(function () {
@@ -22,28 +22,28 @@ $().ready(function () {
         dataType: 'json'
     }).done(function (data) {
         for (let item of data) {
-            images.push(item)
+            images.push(item);
         }
 
         dropDownMenu = $('#templates .option')[0]
         for (let _template of images) {
-            let a = document.createElement('a')
-            let img = document.createElement('img')
-            let name = document.createElement('p')
+            let a = document.createElement('a');
+            let img = document.createElement('img');
+            let name = document.createElement('p');
 
-            a.classList.add('dropdown-item')
+            a.classList.add('dropdown-item');
 
-            img.src = _template['blank']
-            img.alt = "Not found"
-            img.style.width = "100px" //200
+            img.src = _template['blank'];
+            img.alt = "Not found";
+            img.style.width = "100px"; //200
 
-            name.innerText = _template['name']
+            name.innerText = _template['name'];
 
-            a.append(img, name)
-            dropDownMenu.appendChild(a)
+            a.append(img, name);
+            dropDownMenu.appendChild(a);
         }
 
-        let templates = $('#templates a')
+        let templates = $('#templates a');
         for (let i = 0; i < templates.length; i++) {
             let template = templates[i].getElementsByTagName('img')[0]
             template.addEventListener('click', function () {
@@ -56,42 +56,42 @@ $().ready(function () {
 })
 
 file.addEventListener('change', function(){
-    let img = file.files[0]
+    let img = file.files[0];
     if(!img){
-        return
+        return;
     }
     if (img['type'].split('/')[0] !== 'image') {
-        alert("You have to upload an image!")
-        file.value = null
-        return
+        alert("You have to upload an image!");
+        file.value = null;
+        return;
     }
-    let reader = new FileReader()
+    let reader = new FileReader();
 
     reader.onload = function(e){
-        let data = reader.result
+        let data = reader.result;
         fabric.Image.fromURL(data, function(img){
-            addBackgroundToCanvas(canvas, img)
+            addBackgroundToCanvas(canvas, img);
         }, {crossOrigin: 'anonymous'})
     }
 
-    reader.readAsDataURL(img)
+    reader.readAsDataURL(img);
 })
 
-let addTextBtn = $('#addText')[0]
-let text = $('#text')[0]
-let color = $('#color')[0]
-let searchField = $('#searchField')[0]
+let addTextBtn = $('#addText')[0];
+let text = $('#text')[0];
+let color = $('#color')[0];
+let searchField = $('#searchField')[0];
 
 searchField.addEventListener('input', function() {
-    let query = searchField.value
+    let query = searchField.value;
     const regex = new RegExp("(\\s|^)" + query, 'i')
     for (let dropdownItem of $('#templates .dropdown-item')) {
-        let pTag = dropdownItem.getElementsByTagName('p')[0]
+        let pTag = dropdownItem.getElementsByTagName('p')[0];
         if (regex.test(pTag.innerText)) {
-            dropdownItem.style.display = "block"
-            highlightRegex(pTag, query)
+            dropdownItem.style.display = "block";
+            highlightRegex(pTag, query);
         } else {
-            dropdownItem.style.display = "none"
+            dropdownItem.style.display = "none";
         }
 
     }
@@ -102,53 +102,54 @@ addTextBtn.addEventListener('click', function(){
         left: 100,
         top: 100,
         fontSize: 20,
+        fontFamily: 'Impact',
         fill: color.value,
         align: 'mid',
         originX: 'center',
         originY: 'center',
         stroke: true
     })
-    canvas.add(_text)
+    canvas.add(_text);
 })
 
 window.addEventListener('keydown', function(e){
     if (isInputActive()) {
-        return
+        return;
     }
     if(e.key === "Delete" || e.key === "Backspace"){
-        canvas.remove(canvas.getActiveObject())
+        canvas.remove(canvas.getActiveObject());
     }
 })
 
 function highlightRegex(pTag, query) {
-    let text = pTag.innerText
-    pTag.innerHTML = ''
-    let matched = getIndicesOf(query, text, false)
+    let text = pTag.innerText;
+    pTag.innerHTML = '';
+    let matched = getIndicesOf(query, text, false);
 
-    let lastNormalIndex = 0
+    let lastNormalIndex = 0;
     for (let index of matched) {
         if (index > lastNormalIndex) {
-            let normalSpan = document.createElement('span')
-            normalSpan.classList.add('regex-normal')
+            let normalSpan = document.createElement('span');
+            normalSpan.classList.add('regex-normal');
 
-            normalSpan.innerText = text.substring(lastNormalIndex, index)
-            pTag.appendChild(normalSpan)
+            normalSpan.innerText = text.substring(lastNormalIndex, index);
+            pTag.appendChild(normalSpan);
         }
 
-        let regexSpan = document.createElement('span')
-        regexSpan.classList.add('regex-highlight')
+        let regexSpan = document.createElement('span');
+        regexSpan.classList.add('regex-highlight');
 
-        regexSpan.innerText = text.substr(index, query.length)
-        pTag.appendChild(regexSpan)
-        lastNormalIndex = index + query.length
+        regexSpan.innerText = text.substr(index, query.length);
+        pTag.appendChild(regexSpan);
+        lastNormalIndex = index + query.length;
     }
 
     if (text.substring(lastNormalIndex)) {
-        let normalSpan = document.createElement('span')
-        normalSpan.classList.add('regex-normal')
+        let normalSpan = document.createElement('span');
+        normalSpan.classList.add('regex-normal');
 
-        normalSpan.innerText = text.substring(lastNormalIndex)
-        pTag.appendChild(normalSpan)
+        normalSpan.innerText = text.substring(lastNormalIndex);
+        pTag.appendChild(normalSpan);
     }
 }
 
@@ -178,33 +179,33 @@ function selectObj(canvas, obj, ignoreContains = false) {
 function isInputActive() {
     for (let inp of $('input, textarea')) {
         if (document.activeElement === inp) {
-            return true
+            return true;
         }
     }
-    return false
+    return false;
 }
 
 function addBackgroundToCanvas(canvas, img) {
-    canvas.clear()
+    canvas.clear();
     img.set({"selectable":false, "evented": false})
 
     if (img.width > maxWidth || img.height > maxHeight) {
         if (img.width > img.height) {
-            img.scaleToWidth(maxWidth, false)
+            img.scaleToWidth(maxWidth, false);
         } else {
-            img.scaleToHeight(maxHeight, false)
+            img.scaleToHeight(maxHeight, false);
         }
     } else if (img.width < minWidth || img.height < minHeight) {
         if (img.width > img.height) {
-            img.scaleToHeight(minHeight, false)
+            img.scaleToHeight(minHeight, false);
         } else {
-            img.scaleToWidth(minWidth, false)
+            img.scaleToWidth(minWidth, false);
         }
     }
 
-    canvas.setWidth(img.getScaledWidth())
-    canvas.setHeight(img.getScaledHeight())
-    canvas.add(img)
+    canvas.setWidth(img.getScaledWidth());
+    canvas.setHeight(img.getScaledHeight());
+    canvas.add(img);
 }
 
 canvas.on('object:moving', function (e) {
@@ -228,9 +229,9 @@ canvas.on('object:moving', function (e) {
 
 canvas.on('mouse:dblclick', function(e) {
     if (canvas.getActiveObjects().length) {
-        return
+        return;
     }
-    let position = getMouseCoords(canvas, e)
+    let position = getMouseCoords(canvas, e);
     let text = new fabric.IText('Write something funny', {
         fontSize: 50,
         fill: '#ffffff',
@@ -240,30 +241,30 @@ canvas.on('mouse:dblclick', function(e) {
     })
 
     if (text.width > canvas.width) {
-        text.scaleToWidth(canvas.width, false)
+        text.scaleToWidth(canvas.width, false);
     }
 
     // set text in canvas boundary (x)
     if (position.x - text.width / 2 < 0) {
-        text.left = text.width / 2
+        text.left = text.width / 2;
     } else if (position.x + text.width / 2 > canvas.width) {
-        text.left = canvas.width - text.width / 2
+        text.left = canvas.width - text.width / 2;
     } else {
-        text.left = position.x
+        text.left = position.x;
     }
 
     // set text in canvas boundary(y)
     if (position.y - text.height / 2 < 0) {
-        text.top = text.height / 2
+        text.top = text.height / 2;
     } else if (position.y + text.height / 2 > canvas.height) {
-        text.top = canvas.height - text.height / 2
+        text.top = canvas.height - text.height / 2;
     } else {
-        text.top = position.y
+        text.top = position.y;
     }
 
 
     if (position.y - text.height / 2 < 0) {
-        text.top = text.height / 2
+        text.top = text.height / 2;
     }
 
     canvas.add(text)
@@ -282,11 +283,11 @@ function getMouseCoords(canvas, e) {
 
 let saveBtn = document.getElementById('download')
 saveBtn.addEventListener('click', function(){
-    let data = canvas.toDataURL()
-    let link = document.createElement('a')
-    link.href = data
-    link.download = 'image.png'
-    link.click()
+    let data = canvas.toDataURL();
+    let link = document.createElement('a');
+    link.href = data;
+    link.download = 'image.png';
+    link.click();
 })
 
 // select template updated
