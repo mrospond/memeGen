@@ -20,9 +20,12 @@
             <img id="pie"
                  src="../static/img/pie.png">
         </div>
-    <button id="start">Play!</button>
-    <button id="replay" style="display: none">Replay</button>
-    <h3 id="defeatText" style="display: none">You lost!</h3>
+        <div class="replay-container">
+            <button id="replay" style="display: none">Replay</button>
+        </div>
+        <p class="pie-count">Pie count: 0</p>
+        <h3 id="defeatText" style="display: none">You lost!</h3>
+        <h3 id="hintText" style="display: block">Press an arrow to play</h3>
     </div>
     <script src="../static/snake.js">
 {% endblock %}

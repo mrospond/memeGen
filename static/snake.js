@@ -12,10 +12,15 @@ const keysToDirections = {
 const pieSrc = '../static/img/pie.png'
 const snakeHeadSrc = '../static/img/face.png'
 
-const startButton = $('#start')[0]
 const replayButton = $('#replay')[0]
 const defeatText = $('#defeatText')[0]
 const game = $('#game')[0]
+const hintText = $('#hintText')[0]
+const pieCounterElement = $('.pie-count')[0]
+
+let started = false
+let pieCounter = 0
+
 game.width = xCells * cellSize
 game.height = yCells * cellSize
 
@@ -63,8 +68,8 @@ const snake = {
     tail: [],
     tailLength: 4,
     startPos: {
-        cellX: 7,
-        cellY: 7
+        cellX: 3,
+        cellY: 13
     },
     direction: 'right',
     directionChanged: false,
@@ -82,8 +87,8 @@ const snake = {
         snake.tail = []
         snake.tailLength = 4
         snake.startPos = {
-            cellX: 7,
-            cellY: 7
+            cellX: 3,
+            cellY: 13
         }
         snake.direction = 'right'
         snake.dead = false
@@ -144,6 +149,7 @@ const snake = {
             this.updateTail(newPos)
             this.tail.push(tailEnd)
             tailLost = false
+            pieCounterElement.innerText = 'Pie count: ' + ++pieCounter
             gameArea.spawnPie()
         }
 
@@ -177,7 +183,6 @@ function getRandomInt(min, max) {
 function refreshArea() {
     if (snake.dead) {
         defeatText.style = 'display: block'
-        startButton.style = 'display: none'
         replayButton.style = 'display: block'
         return
     }
@@ -201,31 +206,6 @@ function refreshArea() {
 
     frames++
     setTimeout(refreshArea, deltaTime)
-}
-
-function renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod) {
-    if (!snakeHead) {
-        snakeHead = new Image(cellSize, cellSize)
-        snakeHead.onload = function () {
-            _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod)
-        }
-        snakeHead.src = snakeHeadSrc
-    } else {
-        _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod)
-    }
-}
-
-function _renderTailHead(head, subHeadCoords, nextDirection, subHeadDirection, sequenceNum, mod) {
-    let scale = (sequenceNum + 1) / mod
-    if (nextDirection === 'left') {
-        gameArea.context.drawImage(snakeHead, (subHeadCoords.cellX + (1 - scale)) * cellSize, subHeadCoords.cellY * cellSize, cellSize, cellSize)
-    } else if (nextDirection === 'right') {
-        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, subHeadCoords.cellY * cellSize, cellSize, cellSize)
-    } else if (nextDirection === 'down') {
-        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, subHeadCoords.cellY * cellSize , cellSize, cellSize)
-    } else if (nextDirection === 'up') {
-        gameArea.context.drawImage(snakeHead, subHeadCoords.cellX * cellSize, (subHeadCoords.cellY + (1 - scale)) * cellSize, cellSize, cellSize)
-    }
 }
 
 function renderImage(imgX, imgY) {
@@ -331,36 +311,50 @@ function getTailNodeNextDirection(previous, next) {
     }
 }
 
-function initGame() {
+function initRender() {
+    for (let i = 1; i < snake.tail.length; i++) {
+        gameArea.context.fillRect(snake.tail[i].cellX * cellSize, snake.tail[i].cellY * cellSize, cellSize, cellSize)
+        renderImage(snake.tail[0].cellX * cellSize, snake.tail[0].cellY * cellSize)
+    }
+}
+
+function initGame(initArea= true) {
     snake.init()
-    gameArea.init()
+    if (initArea) {
+        gameArea.init()
+    }
+    replayButton.style = 'display: none'
+    defeatText.style = 'display: none'
+    gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
+    hintText.style = 'display: block'
+    pieCounterElement.innerText = 'Pie count: 0'
+    pieCounter = 0
+    started = false
     gameArea.spawnPie()
     renderPie()
+    initRender()
 }
 
 let nextDirection
 let lostTailEnd
 let tailLost
 
-startButton.addEventListener('click', function () {
-    console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
-    refreshArea()
-})
 replayButton.addEventListener('click', function () {
     snake.reset()
-    snake.init()
-    gameArea.spawnPie()
-    renderPie()
+    initGame(false)
     console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
-    startButton.style = 'display: block'
     replayButton.style = 'display: none'
-    refreshArea()
 })
 
 $().ready(function () {
     initGame()
     window.addEventListener('keydown', function (e) {
         if (keysToDirections[e.key]) {
+            if (!started) {
+                refreshArea()
+                started = true
+                hintText.style = 'display: none'
+            }
             snake.changeDirection(keysToDirections[e.key])
         }
     })

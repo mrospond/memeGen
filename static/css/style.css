@@ -35,6 +35,22 @@ canvas {
   color: red;
 }
 
+.pie-count {
+  text-align: center;
+  color: blue;
+}
+
+.replay-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hintText {
+  text-align: center;
+  color: green;
+}
+
 #game {
 
 }
