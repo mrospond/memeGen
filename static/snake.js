@@ -206,8 +206,7 @@ function refreshArea() {
         gameArea.context.fillRect(snake.tail[i].cellX * cellSize, snake.tail[i].cellY * cellSize, cellSize, cellSize)
     }
     let tailEndNextDirection = getTailNodeNextDirection(lostTailEnd, snake.tail[snake.tail.length - 1])
-    renderTailSubHead(snake.tail[0], nextDirection, sequenceNum, mod)
-    //renderTailHead(snake.tail[0], subHeadCoords, nextDirection, tailSubHeadNextDirection, sequenceNum, mod)
+    renderTailHead(snake.tail[0], nextDirection, sequenceNum, mod)
     renderTailEnd(lostTailEnd, tailEndNextDirection, sequenceNum, mod, tailLost)
     renderPie()
 
@@ -227,44 +226,44 @@ function renderImage(imgX, imgY) {
     }
 }
 
-function renderTailSubHead(subHead, direction, sequenceNum, mod) {
+function renderTailHead(head, direction, sequenceNum, mod) {
     let scale = (sequenceNum + 1) / mod
     let coords
     if (direction === 'left') {
         coords = {
-            x: (subHead.cellX + (1 - scale)) * cellSize,
-            y: subHead.cellY * cellSize,
+            x: (head.cellX + (1 - scale)) * cellSize,
+            y: head.cellY * cellSize,
             width: scale * cellSize,
             height: cellSize,
-            imgX: (subHead.cellX - scale + 1) * cellSize,
-            imgY: subHead.cellY * cellSize
+            imgX: (head.cellX - scale + 1) * cellSize,
+            imgY: head.cellY * cellSize
         }
     } else if (direction === 'right') {
         coords = {
-            x: subHead.cellX * cellSize,
-            y: subHead.cellY * cellSize,
+            x: head.cellX * cellSize,
+            y: head.cellY * cellSize,
             width: scale * cellSize,
             height: cellSize,
-            imgX: (subHead.cellX + scale - 1) * cellSize,
-            imgY: subHead.cellY * cellSize
+            imgX: (head.cellX + scale - 1) * cellSize,
+            imgY: head.cellY * cellSize
         }
     } else if (direction === 'down') {
         coords = {
-            x: subHead.cellX * cellSize,
-            y: subHead.cellY * cellSize,
+            x: head.cellX * cellSize,
+            y: head.cellY * cellSize,
             width: cellSize,
             height: scale * cellSize,
-            imgX: subHead.cellX * cellSize,
-            imgY: (subHead.cellY + scale - 1) * cellSize
+            imgX: head.cellX * cellSize,
+            imgY: (head.cellY + scale - 1) * cellSize
         }
     } else if (direction === 'up') {
         coords = {
-            x: subHead.cellX * cellSize,
-            y: (subHead.cellY + (1 - scale)) * cellSize,
+            x: head.cellX * cellSize,
+            y: (head.cellY + (1 - scale)) * cellSize,
             width: cellSize,
             height: scale * cellSize,
-            imgX: subHead.cellX * cellSize,
-            imgY: (subHead.cellY - scale + 1) * cellSize
+            imgX: head.cellX * cellSize,
+            imgY: (head.cellY - scale + 1) * cellSize
         }
     }
     gameArea.context.fillRect(coords.x, coords.y, coords.width, coords.height)
