@@ -181,7 +181,7 @@ textarea {
 
 .canvas-container {
 
-    float: right;
+    // float: right;
 
     // position: relative;
     // right: 0;
@@ -280,4 +280,23 @@ textarea {
 
 .select-box .option .radio {
     display: none;
+}
+
+.flexbox-container {
+    display: flex;
+}
+
+.flexbox-item {
+    width: 200px;
+    margin: 10px;
+    border: 3px solid #333;
+    background-color: #dfdfdf;
+}
+
+.flexbox-item-canva {
+    min-height: 100px;
+}
+
+.flexbox-item-utils {
+    min-height: 300px;
 }
