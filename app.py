@@ -43,6 +43,7 @@ def error(text):
     # return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", code=302)
 
 @app.route("/rick")
+@app.route("/matura-podlasie")
 def rick():
     return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", code=302)
 
