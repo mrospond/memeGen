@@ -1,0 +1,35 @@
+.game {
+  padding: 0;
+  margin: 0 auto;
+  display: block;
+  width: 800px;
+  background-image: url("../img/board.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#defeatText {
+  text-align: center;
+  color: red;
+}
+
+.pie-count {
+  text-align: center;
+  color: blue;
+}
+
+.replay-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hintText {
+  text-align: center;
+  color: green;
+}
+
+#game {
+
+}
