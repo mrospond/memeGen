@@ -51,15 +51,19 @@
             </div>
         </nav>
 
-        {% block content %}
-        {% endblock %}
+        <div class="page-wrap">
 
-        <!-- Footer -->
-        <footer class="footer mt-auto py-3" style="background-color: #f5f5f5;">
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+        <!--
+        <footer class="footer mt-auto py-3 bg-dark" style="background-color: #f5f5f5;">
             <div class="container">
               <span class="text-muted">(c) wwwjs project 2022 g24</span>
             </div>
-          </footer>
+        </footer> -->
 
     </body>
 
