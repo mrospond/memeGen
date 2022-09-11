@@ -35,7 +35,7 @@ $().ready(function () {
 
             img.src = _template['blank']
             img.alt = "Not found"
-            img.style.width = "200px"
+            img.style.width = "100px" //200
 
             name.innerText = _template['name']
 

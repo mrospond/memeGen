@@ -22,13 +22,13 @@
 
         <!-- canva -->
 
-        <div class="col canvas-container">
+        <div class="col-md canvas-container">
             <canvas id="canvas"></canvas>
         </div>
 
         
         <!--utilities-->
-        <div class="col">
+        <div class="col-md">
 
             <div class="row utils-row">
                 <!-- text&color -->
@@ -46,16 +46,16 @@
                     </div>
 
                     <div class="col-sm">
-                        <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
+                        <button class="my-button" id="addText">Add Text</button>
                     </div>
 
                     
                     <div class="col-sm">
-                        <button type="button" class="btn btn-dark" id="download">Download</button>
+                        <button class="my-button" id="download">Download</button>
                     </div>
 
                     <div class="col-sm">
-                        <button type="button" class="btn btn-dark" id="share">Save as link</button>
+                        <button class="my-button" id="share">Send link</button>
                     </div>
 
                 </div>
@@ -66,18 +66,11 @@
                         <div class="options-container" id="templates">
                             <div class="option">
 
-                                <!--wstawka-->
-                                <form class="navbar-form navbar-left" role="search">
+                                <form role="search">
                                     <div class="row">
-                                        <input type="text" class="form-control col-sm" placeholder="Search"
-                                                id="searchField">
+                                        <input type="text" class="form-control" placeholder="Search" id="searchField">
                                     </div>
                                 </form>
-
-                                <!--wstawka-->
-
-                                <!-- <input type="radio" class="radio" id="film" name="category" />
-                                <label for="film">Select Template</label> -->
                             </div>
 
                         </div>

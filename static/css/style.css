@@ -83,7 +83,9 @@ textarea {
   overflow: hidden;
   width: 40px;
   height: 40px;
-  border-radius: 7px;
+  border: solid 5px transparent;
+  border-radius: 50%;
+  margin-left: -1.5rem;
 }
 
 .input-color {
@@ -93,6 +95,25 @@ textarea {
   width: 56px;
   height: 56px;
   border: none;
+}
+
+.my-button {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 1;
 }
 
 .text {
@@ -143,6 +164,7 @@ textarea {
 
 .selected::after {
   content: "";
+  background: url("cow.svg");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -154,7 +176,7 @@ textarea {
 }
 
 .select-box .options-container.active {
-  max-height: 540px;
+  max-height: 340px;
   opacity: 1;
   overflow-y: scroll;
 }
