@@ -83,6 +83,11 @@ textarea {
   color: red;
 }
 
+#defeatText {
+  text-align: center;
+  color: red;
+}
+
 .input-color-container {
   position: relative;
   margin-top: -2.8rem;
