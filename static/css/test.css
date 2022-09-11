@@ -1,0 +1,12 @@
+.col {
+    border: 1px solid red;
+
+}
+
+.row {
+    border: 1px solid blue;
+}
+
+div{
+    border: 1px solid lightgreen;
+}
