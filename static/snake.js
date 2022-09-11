@@ -346,16 +346,18 @@ function initGame(initArea= true) {
     initRender()
 }
 
-let nextDirection
-let lostTailEnd
-let tailLost
-
-replayButton.addEventListener('click', function () {
+function replay() {
     snake.reset()
     initGame(false)
     console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
     replayButton.style = 'display: none'
-})
+}
+
+let nextDirection
+let lostTailEnd
+let tailLost
+
+replayButton.addEventListener('click', replay)
 
 $().ready(function () {
     initGame()
@@ -367,6 +369,9 @@ $().ready(function () {
                 hintText.style = 'display: none'
             }
             snake.changeDirection(keysToDirections[e.key])
+        }
+        if ((e.key === ' ' || e.key === 'Enter') && window.getComputedStyle(replayButton, null).display === 'block') {
+            replay()
         }
     })
 })
