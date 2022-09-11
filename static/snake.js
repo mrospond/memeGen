@@ -35,7 +35,7 @@ const snake = {
     },
     direction: 'right',
     keyPressQueue: [],
-    speed: 8,
+    speed: 15,
     init: function () {
         for (let i = 0; i < this.tailLength; i++) {
             this.tail.push({
@@ -43,9 +43,6 @@ const snake = {
                 cellY: this.startPos.cellY
             })
         }
-        this.currentDestination = {cellX: this.startPos.cellX + 1, cellY: this.startPos.cellY}
-        this._tail = this._copyTailWithRealCoords()
-        this._currentDestination = {x: (this.startPos.cellX + 1) * cellSize, y: this.startPos.cellY * cellSize}
         this._deltaPosition = deltaTime * ((this.speed * cellSize) / 1000)
     },
     changeDirection: function (direction) {
@@ -61,23 +58,8 @@ const snake = {
         if (this.direction === 'right' && direction === 'left') {
             return;
         }
-        //this.direction = direction
-        this.keyPressQueue.push(direction)
-    },
-    moveDestination: function () {
-        let newPos
-        console.log('Tail head: ' + this.tail[0].cellX + ' ' + this.tail[0].cellY)
-        if (this.direction === 'left') {
-            newPos = {cellX: this.tail[0].cellX - 1, cellY: this.tail[0].cellY}
-        } else if (this.direction === 'right') {
-            newPos = {cellX: this.tail[0].cellX + 1, cellY: this.tail[0].cellY}
-        } else if (this.direction === 'up') {
-            newPos = {cellX: this.tail[0].cellX, cellY: this.tail[0].cellY - 1}
-        } else if (this.direction === 'down') {
-            newPos = {cellX: this.tail[0].cellX, cellY: this.tail[0].cellY + 1}
-        }
-        this._currentDestination = {x: newPos.cellX * cellSize, y: newPos.cellY * cellSize}
-        this.currentDestination = newPos
+        this.direction = direction
+        //this.keyPressQueue.push(direction)
     },
     updateTail: function (newPosition) {
         let newPos = newPosition
@@ -87,47 +69,88 @@ const snake = {
             newPos = temp
         }
     },
-    _copyTailWithRealCoords: function () {
-        let tailCopy = []
-        for (let i = 0; i < this.tail.length; i++) {
-            let cell = this.tail[i]
-            let positionCopy = {x: cell.cellX * cellSize, y: cell.cellY * cellSize}
-            tailCopy.push(positionCopy)
+    move: function () {
+        let newPos
+        console.log('Tail head: ' + this.tail[0].cellX + ' ' + this.tail[0].cellY)
+        console.log(this.direction)
+        if (this.direction === 'left') {
+            newPos = {cellX: this.tail[0].cellX - 1, cellY: this.tail[0].cellY}
+        } else if (this.direction === 'right') {
+            newPos = {cellX: this.tail[0].cellX + 1, cellY: this.tail[0].cellY}
+        } else if (this.direction === 'down') {
+            newPos = {cellX: this.tail[0].cellX, cellY: this.tail[0].cellY + 1}
+        } else if (this.direction === 'up') {
+            newPos = {cellX: this.tail[0].cellX, cellY: this.tail[0].cellY - 1}
         }
-        return tailCopy
-    },
-
-    _moveTowardsDestination: function () {
-        let deltaX = Math.abs(this._currentDestination.x - this._tail[0].x)
-        let deltaY = Math.abs(this._currentDestination.y - this._tail[0].y)
-
-        if (deltaX < this._deltaPosition && deltaY < this._deltaPosition) {
-            this.updateTail(this.currentDestination)
-            this._tail = this._copyTailWithRealCoords()
-            this.direction = this.keyPressQueue.shift()
-            this.keyPressQueue = []
-            this.moveDestination()
-        } else if (deltaX > 0) {
-            let sign = Math.sign(deltaX)
-            for (let i = 0; i < this._tail.length; i++) {
-                this._tail[i].x += sign * this._deltaPosition
-            }
-        } else if (deltaY > 0) {
-            let sign = Math.sign(deltaY)
-            for (let i = 0; i < this._tail.length; i++) {
-                this._tail[i].y += sign * this._deltaPosition
-            }
+        let lostTailEnd = this.tail[this.tail.length - 1]
+        this.updateTail(newPos)
+        return {
+            nextDirection: this.direction,
+            lostTailEnd: lostTailEnd
         }
     }
 }
 
 function refreshArea() {
-    gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
-    for (let i = 0; i < snake._tail.length; i++) {
-        gameArea.context.fillRect(snake._tail[i].x, snake._tail[i].y, cellSize, cellSize)
+    let mod = Math.round(frameRate / snake.speed)
+    let sequenceNum = frames % mod
+    if (sequenceNum === 0) {
+        console.log('Moved')
+        let tuple = snake.move()
+        nextDirection = tuple.nextDirection
+        lostTailEnd = tuple.lostTailEnd
     }
-    snake._moveTowardsDestination()
+    gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
+    for (let i = 1; i < snake.tail.length; i++) {
+        gameArea.context.fillRect(snake.tail[i].cellX * cellSize, snake.tail[i].cellY * cellSize, cellSize, cellSize)
+    }
+    let tailEndNextDirection = getTailEndNextDirection(lostTailEnd, snake.tail[snake.tail.length - 1])
+    renderTailHead(snake.tail[0], nextDirection, sequenceNum, mod)
+    renderTailEnd(lostTailEnd, tailEndNextDirection, sequenceNum, mod)
+
+    frames++
     setTimeout(refreshArea, deltaTime)
+}
+
+function renderTailHead(head, nextDirection, sequenceNum, mod) {
+    let scale = (sequenceNum + 1) / mod
+    if (nextDirection === 'left') {
+        gameArea.context.fillRect((head.cellX + (1 - scale)) * cellSize, head.cellY * cellSize, scale * cellSize, cellSize)
+    } else if (nextDirection === 'right') {
+        gameArea.context.fillRect(head.cellX * cellSize, head.cellY * cellSize, scale * cellSize, cellSize)
+    } else if (nextDirection === 'down') {
+        gameArea.context.fillRect(head.cellX * cellSize, head.cellY * cellSize , cellSize, scale * cellSize)
+    } else if (nextDirection === 'up') {
+        gameArea.context.fillRect(head.cellX * cellSize, (head.cellY + (1 - scale)) * cellSize, cellSize, scale * cellSize)
+    }
+}
+
+function renderTailEnd(tailEnd, nextDirection, sequenceNum, mod) {
+    let scale = (sequenceNum + 1) / mod
+    if (nextDirection === 'left') {
+        gameArea.context.fillRect(tailEnd.cellX * cellSize, tailEnd.cellY * cellSize, (1 - scale) * cellSize, cellSize)
+    } else if (nextDirection === 'right') {
+        gameArea.context.fillRect((tailEnd.cellX + scale) * cellSize, tailEnd.cellY * cellSize, (1 - scale) * cellSize, cellSize)
+    } else if (nextDirection === 'down') {
+        gameArea.context.fillRect(tailEnd.cellX * cellSize, (tailEnd.cellY + scale) * cellSize , cellSize, (1 - scale) * cellSize)
+    } else if (nextDirection === 'up') {
+        gameArea.context.fillRect(tailEnd.cellX * cellSize, tailEnd.cellY * cellSize, cellSize, (1 - scale) * cellSize)
+    }
+}
+
+function getTailEndNextDirection(lostTailEnd, currentTailEnd) {
+    if (currentTailEnd.cellX - lostTailEnd.cellX < 0) {
+        return 'left'
+    }
+    if (currentTailEnd.cellX - lostTailEnd.cellX > 0) {
+        return 'right'
+    }
+    if (currentTailEnd.cellY - lostTailEnd.cellY > 0) {
+        return 'down'
+    }
+    if (currentTailEnd.cellY - lostTailEnd.cellY < 0) {
+        return 'up'
+    }
 }
 
 function initGame() {
@@ -135,6 +158,8 @@ function initGame() {
     gameArea.init()
 }
 
+let nextDirection
+let lostTailEnd
 function startGame() {
     console.log('Frame updates every ' + deltaTime + ' ms with framerate: ' + frameRate)
     refreshArea()
@@ -143,7 +168,9 @@ function startGame() {
 $().ready(function () {
     initGame()
     window.addEventListener('keydown', function (e) {
-        console.log(keysToDirections[e.key])
-        snake.changeDirection(keysToDirections[e.key])
+        if (keysToDirections[e.key]) {
+            console.log(keysToDirections[e.key])
+            snake.changeDirection(keysToDirections[e.key])
+        }
     })
 })
