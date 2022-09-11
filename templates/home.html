@@ -1,13 +1,46 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pl-PL">
 
+<head>
+    <meta charset="utf-8">
+    <title>memeGen</title>
+    <link rel="icon" type="image/x-icon" href="../static/img/pika.ico">
 
-{% block style %}
-<link rel="stylesheet" href="../static/css/style.css">
-{% endblock %}
+    <!-- Roboto font tags -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
-{% block content %}
-<div style="padding: 20px;">
-    <h1>Home</h1>
-</div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-{% endblock %}
+    <link  rel="stylesheet" href="../static/css/home.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="../static/index.js"></script>
+</head>
+
+<body>
+    <div class="milk-bar card">
+        <h1 class="text-center card-title">memeGen</h1>
+        <div class="hide-options card-body" id="list-options">
+
+            <div class="option">
+                <h2 class="text-center"><a href="/create-meme">memeGenerator</a></h2>
+            </div>
+
+            <div class="option">
+                <h2 class="text-center"><a href="/snake">Gaming</a></h2>
+            </div>
+
+            <div class="option">
+                <h2 class="text-center"><a href="/about">About</a></h2>
+            </div>
+
+            <div class="option">
+                 <h2 class="text-center"><a href="/rick">Zadania matura Podlasie</a></h2>
+            </div>
+
+        </div>
+    </div>
+</body>
