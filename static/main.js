@@ -106,6 +106,7 @@ addTextBtn.addEventListener('click', function(){
         align: 'mid',
         originX: 'center',
         originY: 'center',
+        stroke: true
     })
     canvas.add(_text)
 })
