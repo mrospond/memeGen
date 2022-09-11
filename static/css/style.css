@@ -19,7 +19,7 @@ body footer {
   margin-top: auto;
 }
 
-canvas {
+.game {
   padding: 0;
   margin: 0 auto;
   display: block;

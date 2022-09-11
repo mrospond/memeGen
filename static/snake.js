@@ -38,6 +38,7 @@ const gameArea = {
         this.canvas.style.width = xCells * cellSize + 'px';
         this.canvas.style.height = yCells * cellSize + 'px';
         this.context = this.canvas.getContext('2d')
+        this.canvas.classList.add('game')
         this.context.fillStyle = '#ffde00'
 
         this.canvas.classList.add('snake')
