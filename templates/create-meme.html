@@ -11,6 +11,7 @@
 {% block style %}
 
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/test.css">
 
 {% endblock %}
 
@@ -19,8 +20,6 @@
 <div class="container meme-container">
 
     <div class="row">
-
-        <!-- canva -->
 
         <div class="col-md canvas-container">
             <canvas id="canvas"></canvas>
@@ -31,25 +30,37 @@
         <div class="col-md">
 
             <div class="row utils-row">
+
                 <!-- text&color -->
                 <div class="row">
-                    <div class="col-sm">
+
+                    <div class="col-sm">                   
                         <textarea placeholder="Add text" id="text"></textarea>
-                    </div>
 
-                    <!-- <input class="col-sm" type="color" id="color"> -->
-
-                    <div class="col-sm">
                         <div class="input-color-container">
                             <input id="color" class="input-color" type="color">
                         </div>
-                    </div>
 
+                        <div>
+                            <select id="font-control" name="font-control">
+                                <option selected value="Impact">Impact</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times</option>
+                                <option value="Comic Sans MS">Comic Sans</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="col-sm">
                         <button class="my-button" id="addText">Add Text</button>
                     </div>
 
-                    
+                </div>
+
+                <!--save buttons-->
+                <div class="row">
+
+                                        
                     <div class="col-sm">
                         <button class="my-button" id="download">Download</button>
                     </div>
@@ -57,6 +68,7 @@
                     <div class="col-sm">
                         <button class="my-button" id="share">Send link</button>
                     </div>
+
 
                 </div>
 

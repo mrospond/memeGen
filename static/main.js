@@ -304,3 +304,10 @@ optionsList.forEach(o => {
     optionsContainer.classList.remove("active");
   });
 });
+
+//font
+let fontControl = $('#font-control')[0]
+fontControl.addEventListener('change', function (){
+    canvas.getActiveObject().fontFamily = fontControl.value;
+    canvas.renderAll();
+})
