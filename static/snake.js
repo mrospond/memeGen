@@ -17,9 +17,11 @@ const defeatText = $('#defeatText')[0]
 const game = $('#game')[0]
 const hintText = $('#hintText')[0]
 const pieCounterElement = $('.pie-count')[0]
+const pieHighScoreElement = $('#pie-highScore')[0]
 
 let started = false
 let pieCounter = 0
+let pieHighScore = 0
 
 game.width = xCells * cellSize
 game.height = yCells * cellSize
@@ -57,9 +59,6 @@ const gameArea = {
 
         gameArea.pieLocation = cell
         console.log('Spawned pie at: ' + cell.cellX + ' ' + cell.cellY)
-        for (let i = 0; i < snake.tail.length; i++) {
-            console.log(i + ': ' + snake.tail[i].cellX + ' ' + snake.tail[i].cellY)
-        }
     }
 }
 
@@ -149,6 +148,8 @@ const snake = {
             this.tail.push(tailEnd)
             tailLost = false
             pieCounter++
+            pieHighScore = Math.max(pieCounter, pieHighScore)
+            pieHighScoreElement.innerText = 'Najlepszy wynik: ' + pieHighScore
             pieCounterElement.innerText = 'Zjedzone kremówki: ' + '2137 - ' + (2137 - pieCounter) + ' = ' + pieCounter
             gameArea.spawnPie()
         }

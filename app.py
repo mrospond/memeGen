@@ -23,13 +23,13 @@ def home():
 def test():
     return render_template("test.html")
 
+@app.route("/create-meme", methods = ['POST', 'GET'])
+def create_meme():
+    return render_template("create-meme.html")
+
 @app.route("/snake")
 def snake():
     return render_template("snake.html")
-
-@app.route("/create-meme")
-def create_meme():
-    return render_template("create-meme.html")
 
 @app.route("/about")
 def about():

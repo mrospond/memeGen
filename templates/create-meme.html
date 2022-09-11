@@ -11,44 +11,78 @@
 {% block style %}
 
     <link rel="stylesheet" href="../static/css/style.css">
+    {#<link rel="stylesheet" href="../static/css/test.css">#}
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="container text-center row">
+<div class="container meme-container">
 
-        <div class="row justify-content-center col-sm" style="padding: 20px;">
+    <div class="row">
 
-            <!-- canva -->
-            <div class="col-sm canvas-container">
-                <canvas id="canvas"></canvas>
-            </div>
+        <div class="col-md canvas-container">
+            <canvas id="canvas"></canvas>
         </div>
 
-        <div class="row justify-content-center col-sm" style="padding: 20px;">
+        
+        <!--utilities-->
+        <div class="col-md">
 
-            <!-- utils -->
-            <div class="col-sm">
+            <div class="row utils-row">
 
-                <!-- upload/template -->
-                <div>
-                    <div class="select-box">
+                <!-- text&color -->
+                <div class="row">
+
+                    <div class="col-sm">                   
+                        <textarea placeholder="Add text" id="text"></textarea>
+
+                        <div class="input-color-container">
+                            <input id="color" class="input-color" type="color">
+                        </div>
+
+                        <div>
+                            <select id="font-control" name="font-control">
+                                <option selected value="Impact">Impact</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times</option>
+                                <option value="Comic Sans MS">Comic Sans</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm">
+                        <button class="my-button" id="addText">Add Text</button>
+                    </div>
+
+                </div>
+
+                <!--save buttons-->
+                <div class="row">
+
+                                        
+                    <div class="col-sm">
+                        <button class="my-button" id="download">Download</button>
+                    </div>
+
+                    <div class="col-sm">
+                        <button class="my-button" id="share">Send link</button>
+                    </div>
+
+
+                </div>
+
+                <!--templates&upload-->
+                <div class="row">
+                    <div class="col select-box">
                         <div class="options-container" id="templates">
                             <div class="option">
 
-                                <!--wstawka-->
-                                <form class="navbar-form navbar-left" role="search">
-                                    <div class="row form-group">
-                                        <input type="text" class="form-control col-sm" placeholder="Search"
-                                               id="searchField">
+                                <form role="search">
+                                    <div class="row">
+                                        <input type="text" class="form-control" placeholder="Search" id="searchField">
                                     </div>
                                 </form>
-
-                                <!--wstawka-->
-
-                                <!-- <input type="radio" class="radio" id="film" name="category" />
-                                <label for="film">Select Template</label> -->
                             </div>
 
                         </div>
@@ -56,44 +90,29 @@
                         <div class="selected">
                             Select Template
                         </div>
-                    </div>
-                    <input type="file" id="file" accept="image/*">
 
+                    </div>
+
+                    <div class="col">
+                        <input type="file" id="file" accept="image/*">
+                    </div>
                 </div>
 
-                <!-- text/color -->
-                <div class="row">
-                    <div class="col-sm">
-                        <textarea class="form-group" placeholder="Add text" id="text"></textarea>
-                    </div>
-
-                    <!-- <input class="col-sm" type="color" id="color"> -->
-
-                    <div class="input-color-container">
-                        <input id="color" class="input-color" type="color">
-                    </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="col-sm btn btn-dark" id="addText">Add Text</button>
-                    </div>
-
-                </div>
-
-                <!-- save/download -->
-                <div>
-                    <button type="button" class="btn btn-dark" id="save">Save Meme</button>
-                </div>
 
             </div>
 
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js"
-            integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../static/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.js"
+        integrity="sha512-d5yqsvICrC8y0ivNsNizSCHXjzireXYU6LmzAvcrL97GMwEn0VKx1vclEwvtsh/yPD2EcATnUG1oEtJuFcTE3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../static/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 {% endblock %}

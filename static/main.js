@@ -35,7 +35,7 @@ $().ready(function () {
 
             img.src = _template['blank']
             img.alt = "Not found"
-            img.style.width = "200px"
+            img.style.width = "100px" //200
 
             name.innerText = _template['name']
 
@@ -89,6 +89,7 @@ searchField.addEventListener('input', function() {
         let pTag = dropdownItem.getElementsByTagName('p')[0]
         if (regex.test(pTag.innerText)) {
             dropdownItem.style.display = "block"
+            highlightRegex(pTag, query)
         } else {
             dropdownItem.style.display = "none"
         }
@@ -105,6 +106,7 @@ addTextBtn.addEventListener('click', function(){
         align: 'mid',
         originX: 'center',
         originY: 'center',
+        stroke: true
     })
     canvas.add(_text)
 })
@@ -118,8 +120,57 @@ window.addEventListener('keydown', function(e){
     }
 })
 
+function highlightRegex(pTag, query) {
+    let text = pTag.innerText
+    pTag.innerHTML = ''
+    let matched = getIndicesOf(query, text, false)
+
+    let lastNormalIndex = 0
+    for (let index of matched) {
+        if (index > lastNormalIndex) {
+            let normalSpan = document.createElement('span')
+            normalSpan.classList.add('regex-normal')
+
+            normalSpan.innerText = text.substring(lastNormalIndex, index)
+            pTag.appendChild(normalSpan)
+        }
+
+        let regexSpan = document.createElement('span')
+        regexSpan.classList.add('regex-highlight')
+
+        regexSpan.innerText = text.substr(index, query.length)
+        pTag.appendChild(regexSpan)
+        lastNormalIndex = index + query.length
+    }
+
+    if (text.substring(lastNormalIndex)) {
+        let normalSpan = document.createElement('span')
+        normalSpan.classList.add('regex-normal')
+
+        normalSpan.innerText = text.substring(lastNormalIndex)
+        pTag.appendChild(normalSpan)
+    }
+}
+
+function getIndicesOf(searchStr, str, caseSensitive) {
+    let searchStrLen = searchStr.length;
+    if (searchStrLen === 0) {
+        return [];
+    }
+    let startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
+
 function selectObj(canvas, obj, ignoreContains = false) {
-    if (canvas.contains(obj) || ignoreContains) {
+    if (ignoreContains || canvas.contains(obj)) {
         canvas.setActiveObject(obj)
     }
 }
@@ -185,10 +236,35 @@ canvas.on('mouse:dblclick', function(e) {
         fill: '#ffffff',
         align: 'mid',
         originX: 'center',
-        originY: 'center',
-        left: position.x,
-        top: position.y
+        originY: 'center'
     })
+
+    if (text.width > canvas.width) {
+        text.scaleToWidth(canvas.width, false)
+    }
+
+    // set text in canvas boundary (x)
+    if (position.x - text.width / 2 < 0) {
+        text.left = text.width / 2
+    } else if (position.x + text.width / 2 > canvas.width) {
+        text.left = canvas.width - text.width / 2
+    } else {
+        text.left = position.x
+    }
+
+    // set text in canvas boundary(y)
+    if (position.y - text.height / 2 < 0) {
+        text.top = text.height / 2
+    } else if (position.y + text.height / 2 > canvas.height) {
+        text.top = canvas.height - text.height / 2
+    } else {
+        text.top = position.y
+    }
+
+
+    if (position.y - text.height / 2 < 0) {
+        text.top = text.height / 2
+    }
 
     canvas.add(text)
     text.enterEditing()
@@ -204,7 +280,7 @@ function getMouseCoords(canvas, e) {
   }
 }
 
-let saveBtn = document.getElementById('save')
+let saveBtn = document.getElementById('download')
 saveBtn.addEventListener('click', function(){
     let data = canvas.toDataURL()
     let link = document.createElement('a')
@@ -229,3 +305,10 @@ optionsList.forEach(o => {
     optionsContainer.classList.remove("active");
   });
 });
+
+//font
+let fontControl = $('#font-control')[0]
+fontControl.addEventListener('change', function (){
+    canvas.getActiveObject().fontFamily = fontControl.value;
+    canvas.renderAll();
+})

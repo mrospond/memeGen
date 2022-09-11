@@ -19,6 +19,11 @@
   color: blue;
 }
 
+#pie-highScore {
+  text-align: center;
+  color: orange;
+}
+
 .replay-container {
   display: flex;
   align-items: center;
