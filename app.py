@@ -27,6 +27,10 @@ def test():
 def create_meme():
     return render_template("create-meme.html")
 
+@app.route("/snake")
+def snake():
+    return render_template("snake.html")
+
 @app.route("/about")
 def about():
     return render_template("about.html")
