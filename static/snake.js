@@ -1,4 +1,4 @@
-const frameRate = 60
+const frameRate = 80
 const deltaTime = Math.floor(1000 / frameRate)
 const cellSize = 30
 const xCells = 15
@@ -51,16 +51,14 @@ const gameArea = {
                 cellX: getRandomInt(0, xCells),
                 cellY: getRandomInt(0, yCells)
             }
-            for (let i = 0; i < snake.tail.length; i++) {
-                if (snake.tail[i].cellX === cell.cellX && snake.tail[i].cellY === cell.cellY) {
-                    break
-                }
-                spawned = true
-            }
+            spawned = !pieOverlaps(snake.tail, cell)
         }
 
         gameArea.pieLocation = cell
         console.log('Spawned pie at: ' + cell.cellX + ' ' + cell.cellY)
+        for (let i = 0; i < snake.tail.length; i++) {
+            console.log(i + ': ' + snake.tail[i].cellX + ' ' + snake.tail[i].cellY)
+        }
     }
 }
 
@@ -168,6 +166,15 @@ function headOverlaps(tail) {
     let head = tail[0]
     for (let i = 1; i < tail.length; i++) {
         if (head.cellX === tail[i].cellX && head.cellY === tail[i].cellY) {
+            return true
+        }
+    }
+    return false
+}
+
+function pieOverlaps(tail, cell) {
+    for (let i = 0; i < snake.tail.length; i++) {
+        if (snake.tail[i].cellX === cell.cellX && snake.tail[i].cellY === cell.cellY) {
             return true
         }
     }
@@ -312,6 +319,8 @@ function getTailNodeNextDirection(previous, next) {
 }
 
 function initRender() {
+    gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
+    renderPie()
     for (let i = 1; i < snake.tail.length; i++) {
         gameArea.context.fillRect(snake.tail[i].cellX * cellSize, snake.tail[i].cellY * cellSize, cellSize, cellSize)
         renderImage(snake.tail[0].cellX * cellSize, snake.tail[0].cellY * cellSize)
@@ -325,13 +334,15 @@ function initGame(initArea= true) {
     }
     replayButton.style = 'display: none'
     defeatText.style = 'display: none'
-    gameArea.context.clearRect(0, 0, gameArea.canvas.width, gameArea.canvas.height)
     hintText.style = 'display: block'
     pieCounterElement.innerText = 'Pie count: 0'
     pieCounter = 0
+    frames = 0
+    nextDirection = snake.direction.slice()
+    tailLost = false
+    lostTailEnd = undefined
     started = false
     gameArea.spawnPie()
-    renderPie()
     initRender()
 }
 
