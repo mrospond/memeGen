@@ -14,7 +14,6 @@ const minHeight = 400;
 let file = $('#file')[0];
 let images = [];
 let dropDownMenu;
-let shareButton = $('#share')[0]
 
 $().ready(function () {
     $.ajax({
@@ -293,20 +292,13 @@ saveBtn.addEventListener('click', function(){
     link.click();
 })
 
+let shareButton = $('#share')[0]
 shareButton.addEventListener('click', function () {
     $.ajax({
         type: 'POST',
         url: '/share',
         contentType: 'application/json;charset=UTF-8',
         data: canvas.toDataURL(),
-        success: function (data, status, contentType) {
-            console.log(data)
-            console.log(window.location.href.replace('/create-meme', ''))
-            if (data) {
-                // data.redirect contains the string URL to redirect to
-                window.location.href = data.redirect;
-            }
-        },
         error: function (xhr) {
             if (xhr.responseJSON) {
                 window.location.href = window.location.href.replace('/create-meme', xhr.responseJSON.redirect)
