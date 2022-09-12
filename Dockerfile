@@ -1,6 +1,6 @@
 FROM python:3.8-slim-buster
 
-WORKDIR /memeGem
+WORKDIR /memegem
 
 COPY requirements.txt requirements.txt
 

@@ -34,8 +34,8 @@ then to save the installed dependencies run (make sure you're using a virtual en
 
 ## Running the application (Docker)
 
-1. build a docker image: `docker build -t memeGem .`
+1. build a docker image: `docker build -t memegem .`
 
-2. run the container: `docker run -d -p 5000:5000 memeGemr`
+2. run the container: `docker run -d -p 5000:5000 memegem`
 
-3. enable auto restart: `docker update --restart on-failure memeGem`
+3. enable auto restart: `docker update --restart on-failure memegem`
