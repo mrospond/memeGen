@@ -1,5 +1,18 @@
 .navbar {
-  background: linear-gradient(to right, #5f2c82, #7a2828);
+  background: url("../img/back1.png") no-repeat center center fixed;
+}
+
+.nav-link {
+  color: blueviolet;
+}
+
+.navbar-brand {
+  color: crimson;
+}
+
+.nav-link:hover, .navbar-brand:hover {
+  opacity: 1;
+  color: crimson;
 }
 
 body {
@@ -58,6 +71,7 @@ textarea {
 
 .utils-row {
   background-color: #c7c7c7;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   padding: 1em;
   border-radius: 40px;
   outline: none;
@@ -76,6 +90,7 @@ textarea {
   font-family: sans-serif;
   font-weight: 500;
   font-size: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .input-color-container {
@@ -149,6 +164,7 @@ textarea {
   float: right;
 }
 .canvas-container canvas {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   float: right;
   padding: 1px;
   border: 3px groove #f1e9f7;
