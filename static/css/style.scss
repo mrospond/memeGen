@@ -29,7 +29,23 @@ $myColors: (
 
 .navbar {
     background: linear-gradient(to right, color(k), color(j) );
+    background: url("../img/back1.png") no-repeat center center fixed;
     // background: #ffffff7d;
+}
+
+.nav-link {
+    // color: blueviolet;
+    color: blueviolet;
+}
+
+.navbar-brand {
+    color: crimson;
+}
+
+.nav-link:hover, .navbar-brand:hover {
+    opacity: 1;
+    color: crimson;
+
 }
 
 body{ 

@@ -1,5 +1,19 @@
 .navbar {
   background: linear-gradient(to right, #5f2c82, #7a2828);
+  background: url("../img/back1.png") no-repeat center center fixed;
+}
+
+.nav-link {
+  color: blueviolet;
+}
+
+.navbar-brand {
+  color: crimson;
+}
+
+.nav-link:hover, .navbar-brand:hover {
+  opacity: 1;
+  color: crimson;
 }
 
 body {
