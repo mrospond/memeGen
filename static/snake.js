@@ -18,6 +18,7 @@ const game = $('#game')[0]
 const hintText = $('#hintText')[0]
 const pieCounterElement = $('.pie-count')[0]
 const pieHighScoreElement = $('#pie-highScore')[0]
+const song = $('#song')[0]
 
 let started = false
 let pieCounter = 0
@@ -194,6 +195,9 @@ function refreshArea() {
     if (snake.dead) {
         defeatText.style = 'display: block'
         replayButton.style = 'display: block'
+        song.pause()
+        song.currentTime = 0
+
         return
     }
     let mod = Math.round(frameRate / snake.speed)
@@ -366,6 +370,7 @@ $().ready(function () {
     window.addEventListener('keydown', function (e) {
         if (keysToDirections[e.key]) {
             if (!started) {
+                song.play()
                 refreshArea()
                 started = true
                 hintText.style = 'display: none'
