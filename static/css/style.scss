@@ -28,9 +28,8 @@ $myColors: (
 }
 
 .navbar {
-    background: linear-gradient(to right, color(k), color(j) );
+    // background: linear-gradient(to right, color(k), color(j) );
     background: url("../img/back1.png") no-repeat center center fixed;
-    // background: #ffffff7d;
 }
 
 .nav-link {
@@ -119,11 +118,11 @@ textarea {
 
 .utils-row {
     background-color: lighten(color(c), 40%);
+    box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
     // color: #616161;
     padding: 1em;
     border-radius: 40px;
     // border: 2px solid transparent;
-
     outline: none;
     font-family: sans-serif;
     font-weight: 500;
@@ -141,6 +140,7 @@ textarea {
     font-family: sans-serif;
     font-weight: 500;
     font-size: 16px;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
 
 }
 
@@ -209,7 +209,6 @@ textarea {
 }
 
 
-
 .text {
     position: absolute;
     right: -8px;
@@ -224,11 +223,10 @@ textarea {
     float: right;
 
     canvas {
+        box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
         float: right;
         padding: 1px;
         border: 3px groove lighten(color(k), 60%);
-        // margin: 0 auto;
-        // display: block;
         width: 800px;
     }
 }
