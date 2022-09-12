@@ -80,12 +80,14 @@ textarea {
 
 .input-color-container {
   position: relative;
+  margin-top: -2.8rem;
+  margin-right: -5.3rem;
   overflow: hidden;
   width: 40px;
   height: 40px;
   border: solid 5px transparent;
   border-radius: 50%;
-  margin-left: -1.5rem;
+  margin-left: 0.8rem;
 }
 
 .input-color {
@@ -95,13 +97,20 @@ textarea {
   width: 56px;
   height: 56px;
   border: none;
+  cursor: pointer;
+}
+
+#font-control {
+  position: relative;
+  right: -2.6rem;
+  top: 1.3rem;
 }
 
 .my-button {
   background-color: #f4511e;
   border: none;
   color: white;
-  padding: 16px 32px;
+  padding: 10px 32px;
   text-align: center;
   font-size: 16px;
   margin: 4px 2px;
@@ -110,10 +119,21 @@ textarea {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 5px 5px gray;
 }
 
-.button:hover {
+.my-button:hover {
   opacity: 1;
+}
+
+.text-edit {
+  display: flex;
+  align-items: center;
+}
+
+.row {
+  margin: 10px;
 }
 
 .text {
@@ -125,6 +145,9 @@ textarea {
   border: none;
 }
 
+.canvas-container {
+  float: right;
+}
 .canvas-container canvas {
   float: right;
   padding: 1px;
@@ -136,6 +159,10 @@ textarea {
   display: flex;
   width: 1rem;
   flex-direction: column;
+}
+
+#searchField {
+  margin-bottom: 1.2rem;
 }
 
 .select-box .options-container {
@@ -159,17 +186,8 @@ textarea {
   order: 0;
 }
 
-.selected::after {
-  content: "";
-  background: url("cow.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  height: 100%;
-  width: 32px;
-  right: 10px;
-  top: 5px;
-  transition: all 0.4s;
+.select-box:hover {
+  opacity: 1;
 }
 
 .select-box .options-container.active {
