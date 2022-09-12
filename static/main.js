@@ -102,7 +102,7 @@ addTextBtn.addEventListener('click', function(){
         left: 100,
         top: 100,
         fontSize: 20,
-        fontFamily: 'Impact',
+        fontFamily: fontControl.value,
         fill: color.value,
         align: 'mid',
         originX: 'center',
@@ -234,10 +234,12 @@ canvas.on('mouse:dblclick', function(e) {
     let position = getMouseCoords(canvas, e);
     let text = new fabric.IText('Write something funny', {
         fontSize: 50,
-        fill: '#ffffff',
+        fontFamily: fontControl.value,
+        fill: color.value,
         align: 'mid',
         originX: 'center',
-        originY: 'center'
+        originY: 'center',
+        stroke: true
     })
 
     if (text.width > canvas.width) {
