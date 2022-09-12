@@ -19,6 +19,7 @@ const hintText = $('#hintText')[0]
 const pieCounterElement = $('.pie-count')[0]
 const pieHighScoreElement = $('#pie-highScore')[0]
 const song = $('#song')[0]
+const sound = $('#sound')[0]
 
 let started = false
 let pieCounter = 0
@@ -144,6 +145,7 @@ const snake = {
             this.updateTail(newPos)
             tailLost = true
         } else {
+            sound.play()
             this.tailLength++
             this.updateTail(newPos)
             this.tail.push(tailEnd)
