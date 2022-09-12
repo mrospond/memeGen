@@ -35,14 +35,14 @@ $myColors: (
 
 .nav-link {
     // color: blueviolet;
-    color: blueviolet;
+    color: black;
 }
 
 .navbar-brand {
     color: crimson;
 }
 
-.nav-link:hover, .navbar-brand:hover {
+.nav-link:hover, .navbar-brand:hover  {
     opacity: 1;
     color: crimson;
 
