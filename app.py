@@ -1,7 +1,8 @@
 # from urllib import request
-from flask import Flask, render_template, redirect, send_from_directory, url_for
+from flask import Flask, render_template, redirect
+# from flask import send_from_directory, url_for
 
-import requests, json
+# import requests, json
 
 # test blueprint
 # from test.second import second
@@ -16,12 +17,6 @@ def home():
     # data = json.loads(req.content)
 
     return render_template("home.html")
-
-
-# test your templates here
-@app.route("/test")
-def test():
-    return render_template("test.html")
 
 @app.route("/create-meme", methods = ['POST', 'GET'])
 def create_meme():
@@ -40,7 +35,6 @@ def about():
 def error(text):
     page = text
     return render_template("404.html", page=page)
-    # return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", code=302)
 
 @app.route("/rick")
 @app.route("/matura-podlasie")
