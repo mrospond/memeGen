@@ -1,4 +1,4 @@
-# memeGen
+# memeGem
 
 ## Getting started
 
@@ -31,3 +31,11 @@ python3 -m flask run (OR flask run)
 `pip3 install <newModule>` \
 then to save the installed dependencies run (make sure you're using a virtual environment)\
 `pip3 freeze > requirements.txt`
+
+## Running the application (Docker)
+
+1. build a docker image: `docker build -t memeGem .`
+
+2. run the container: `docker run -d -p 5000:5000 memeGemr`
+
+3. enable auto restart: `docker update --restart on-failure memeGem`
