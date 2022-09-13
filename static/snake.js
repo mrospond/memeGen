@@ -19,7 +19,8 @@ const hintText = $('#hintText')[0]
 const pieCounterElement = $('.pie-count')[0]
 const pieHighScoreElement = $('#pie-highScore')[0]
 const song = $('#song')[0]
-const sound = $('#sound')[0]
+const sounds = $('.game-sound')
+const deathSound = $('.death-sound')[0]
 
 let started = false
 let pieCounter = 0
@@ -137,6 +138,7 @@ const snake = {
         if ((newPos.cellX >= xCells || newPos.cellY >= yCells || newPos.cellX < 0 || newPos.cellY < 0)
             || headOverlaps(this.tail)) {
             this.die()
+            deathSound.play()
         }
 
         // eat pie
@@ -145,7 +147,7 @@ const snake = {
             this.updateTail(newPos)
             tailLost = true
         } else {
-            sound.play()
+            playSound()
             this.tailLength++
             this.updateTail(newPos)
             this.tail.push(tailEnd)
@@ -185,6 +187,11 @@ function pieOverlaps(tail, cell) {
         }
     }
     return false
+}
+
+function playSound() {
+    let index = getRandomInt(0, sounds.length)
+    sounds[index].play()
 }
 
 function getRandomInt(min, max) {

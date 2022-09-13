@@ -24,6 +24,9 @@
   color: orange;
 }
 
+.game-sound {
+}
+
 .replay-container {
   display: flex;
   align-items: center;

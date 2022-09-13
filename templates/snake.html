@@ -18,11 +18,20 @@
 {% block content %}
 
     <div id="game" style="margin: 3rem;">
-        <audio controls loop id="song" style="display: none">
+        <audio loop id="song" style="display: none">
             <source src="../static/audio/song.wav" type="audio/wav">
         </audio>
-        <audio controls id="sound" style="display: none">
-            <source src="../static/audio/sound.wav" type="audio/wav">
+        <audio class="game-sound" style="display: none">
+            <source src="../static/audio/sound1.wav" type="audio/wav">
+        </audio>
+        <audio class="game-sound" style="display: none">
+            <source src="../static/audio/sound2.wav" type="audio/wav">
+        </audio>
+        <audio class="game-sound" style="display: none">
+            <source src="../static/audio/sound3.wav" type="audio/wav">
+        </audio>
+        <audio class="death-sound" style="display: none">
+            <source src="../static/audio/okrutnik.wav" type="audio/wav">
         </audio>
         <h3 class="pie-count">Zjedzone kremówki: 0</h3>
         <p id="pie-highScore">Najlepszy wynik: 0</p>
