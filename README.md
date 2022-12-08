@@ -1,4 +1,4 @@
-# memeGem
+# memeGen
 
 ## Getting started
 
@@ -34,8 +34,8 @@ then to save the installed dependencies run (make sure you're using a virtual en
 
 ## Running the application (Docker)
 
-1. build a docker image: `docker build -t memegem .`
+1. build a docker image: `docker build -t memegen .`
 
-2. run the container: `docker run -d -p 5000:5000 --name memegem-container memegem`
+2. run the container: `docker run -d -p 5000:5000 --name memegen-container memegen`
 
-3. enable auto restart: `docker update --restart on-failure memegem-container`
+3. enable auto restart: `docker update --restart on-failure memegen-container`
